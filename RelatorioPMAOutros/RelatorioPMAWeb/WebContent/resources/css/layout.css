@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+
+
+div {
+	
+}
+
+#indicadores,#chamadossolicitantes,#tipochamado,#chamadoemaberto,#chamadofechado,#chamadohost,#principaltimeframe,#outrostimeframe,#princapaloutros_tudo,#princapaloutros_comercial,#workload,#resumodeparadas,#paradasevitadas,#paradasnaoprogramadas,#programadassestrategicas,#paradasprogramadas,#totais,#dbsize
+	{
+	page-break-inside: avoid;
+}
+
+body {
+	background-color: #ffffff;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 0px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+body,td,th,input,textarea,select,a {
+	font-size: 12px;
+}
+
+#graficoesquerda {
+	margin-bottom: 20px;
+}
+
+#graficodireita {
+	margin-bottom: 20px;
+}
+
+.grafico-barra-esquerda {
+	float: left;
+	width: 80%;
+	height: 300px;
+	border-color: green;
+}
+
+.grafico-barra-direita {
+	margin-left: 80%;
+	border-color: red;
+}
+
+#meio-esquerda {
+	float: left;
+	width: 50px;
+}
+
+#meio-direita img {
+	height: 1120px;
+	padding: 10px;
+}
+
+#meio-direita {
+	margin-left: 50px;
+}
+
+#principaltimeframe_mes,#principaltimeframe_ano,#outrostimeframe_mes,#outrostimeframe_ano,#princapaloutros_tudo_mes,#princapaloutros_tudo_ano,#princapaloutros_comercial_mes,#princapaloutros_comercial_ano
+	{
+	height: 400px;
+}

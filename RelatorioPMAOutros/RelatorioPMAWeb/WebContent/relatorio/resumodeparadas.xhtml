@@ -1,0 +1,349 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jstl/core">
+	<h:outputScript library="js" name="jquery.js" target="head" />
+	<h:outputScript library="js" name="jquery.flot.js" target="head" />
+	<h:outputStylesheet library="css" name="grafico.css" target="head" />
+
+	<div id='resumodeparadas' class="quebrapagina">
+		<p class="sub-titulo1">5. Resumo de Paradas</p>
+		<div id='paradasevitadas'>
+			<p class="sub-titulo2">5.1 Paradas Evitadas (PE)</p>
+			<h:outputText value="Consideramos paradas evitadas, atuações executadas no ambiente depois de detectadas pelo monitoramento acionando a equipe técnica que tomou alguma ação para evitar a parada." />
+			<br></br><br></br>
+			<h:outputText value="Últimos anos:" />
+			<h:dataTable value="#{paradasBean.getListaUltimosAnosHoras('PE')}" var="i"
+				styleClass="default-table" headerClass="default-table-header"
+				rowClasses="default-table-odd-row,default-table-even-row"
+				footerClass="default-table-footer"
+				columnClasses="celluleLeft,celluleCenter"
+				rendered="#{!empty paradasBean.getListaUltimosAnosHoras('PE')}">
+
+				<h:column>
+					<f:facet name="header">Ano</f:facet>
+					<h:outputText value="#{i.ano}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Horas</f:facet>
+					<h:outputText value="#{i.horas}" />
+				</h:column>
+
+			</h:dataTable>
+			<h:outputText value="Acumulado do ano:" />
+			<div id="graficoAcumuladoAno" class="graph-med"></div>
+			<h:outputText value="Dados do mês:" rendered="#{!empty paradasBean.listaParadasEvitadasMes}"/>
+			<h:outputText value="Durante o mês vigente no relatório não foram constatadas PEs." rendered="#{empty paradasBean.listaParadasEvitadasMes}"/>
+			<h:dataTable value="#{paradasBean.listaParadasEvitadasMes}" var="i"
+				styleClass="default-table" headerClass="default-table-header"
+				rowClasses="default-table-odd-row,default-table-even-row"
+				footerClass="default-table-footer"
+				columnClasses="celluleLeft,celluleLeft,celluleCenter,celluleLeft,celluleLeft"
+				rendered="#{!empty paradasBean.listaParadasEvitadasMes}">
+
+				<h:column>
+					<f:facet name="header">Chamado</f:facet>
+					<h:outputText value="#{i.idchamado}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Data</f:facet>
+					<h:outputText value="#{i.data}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Tempo (h)</f:facet>
+					<h:outputText value="#{i.horas}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Host</f:facet>
+					<h:outputText value="#{i.host}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Titulo</f:facet>
+					<h:outputText value="#{i.titulo}" />
+				</h:column>
+
+
+			</h:dataTable>
+		</div>
+		<div id='paradasnaoprogramadas'>
+			<p class="sub-titulo2">5.2 Paradas Não Programadas (PNP)</p>
+			<h:outputText
+				value="Paradas que ocorreram no ambiente de forma bruta, sem conhecimento da equipe técnica." />
+			<br></br>
+			<h:outputText value="Durante o mês vigente no relatório não foram constatadas PNP." rendered="#{empty paradasBean.listaParadasNaoProgramadasMes}" />	
+			<h:dataTable value="#{paradasBean.listaParadasNaoProgramadasMes}"
+				var="i" styleClass="default-table"
+				headerClass="default-table-header"
+				rowClasses="default-table-odd-row,default-table-even-row"
+				footerClass="default-table-footer"
+				columnClasses="celluleLeft,celluleCenter,celluleLeft,celluleLeft"
+				rendered="#{!empty paradasBean.listaParadasNaoProgramadasMes}">
+
+				<h:column>
+					<f:facet name="header">Chamado</f:facet>
+					<h:outputText value="#{i.idchamado}" />
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">Data</f:facet>
+					<h:outputText value="#{i.data}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Tempo (h)</f:facet>
+					<h:outputText value="#{i.horas}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Host</f:facet>
+					<h:outputText value="#{i.host}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Titulo</f:facet>
+					<h:outputText value="#{i.titulo}" />
+				</h:column>
+
+			</h:dataTable>
+		</div>
+		<div id='programadassestrategicas'>
+			<p class="sub-titulo2">5.3 Paradas Programadas Estratégicas (PPE)</p>
+			<h:outputText
+				value="Consideramos paradas programadas estratégicas as situações de necessidade de manutenção no ambiente, onde é possível sua execução sem causar indisponibilidade no mesmo." />
+			<br></br>
+			<h:outputText value="Durante o mês vigente no relatório não foram constatadas PPE." rendered="#{empty paradasBean.listaParadasProgramadasEstrategicasMes}" />	
+			<h:dataTable
+				value="#{paradasBean.listaParadasProgramadasEstrategicasMes}" var="i"
+				styleClass="default-table" headerClass="default-table-header"
+				rowClasses="default-table-odd-row,default-table-even-row"
+				footerClass="default-table-footer"
+				columnClasses="celluleLeft,celluleCenter,celluleLeft,celluleLeft"
+				rendered="#{!empty paradasBean.listaParadasProgramadasEstrategicasMes}">
+
+				<h:column>
+					<f:facet name="header">Chamado</f:facet>
+					<h:outputText value="#{i.idchamado}" />
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">Data</f:facet>
+					<h:outputText value="#{i.dataParada}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Tempo (h)</f:facet>
+					<h:outputText value="#{i.horas}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Host</f:facet>
+					<h:outputText value="#{i.host}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Titulo</f:facet>
+					<h:outputText value="#{i.titulo}" />
+				</h:column>
+
+			</h:dataTable>
+		</div>
+		<div id='paradasprogramadas'>
+			<p class="sub-titulo2">5.4 Paradas Programadas (PP)</p>
+			<h:outputText
+				value="Consideramos paradas programas as situações de necessidade de manutenção no ambiente, porém gerando indisponibilidade no mesmo." />
+			<br></br>
+			<h:outputText value="Durante o mês vigente no relatório não foram constatadas PP." rendered="#{empty paradasBean.listaParadasProgramadasMes}" />	
+			<h:dataTable value="#{paradasBean.listaParadasProgramadasMes}" var="i"
+				styleClass="default-table" headerClass="default-table-header"
+				rowClasses="default-table-odd-row,default-table-even-row"
+				footerClass="default-table-footer"
+				columnClasses="celluleLeft,celluleCenter,celluleLeft,celluleLeft"
+				rendered="#{!empty paradasBean.listaParadasProgramadasMes}">
+
+				<h:column>
+					<f:facet name="header">Chamado</f:facet>
+					<h:outputText value="#{i.idchamado}" />
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">Data</f:facet>
+					<h:outputText value="#{i.dataParada}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Tempo (h)</f:facet>
+					<h:outputText value="#{i.horas}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Host</f:facet>
+					<h:outputText value="#{i.host}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Titulo</f:facet>
+					<h:outputText value="#{i.titulo}" />
+				</h:column>
+
+			</h:dataTable>
+		</div>
+		<div id='totais'>
+			<p class="sub-titulo2">5.5 Totais</p>
+			<h:outputText
+				value="A PNP esta diretamente relacionada ao PE, onde PNP gera Downtime e PE gera downtime evitado, sendo assim:" />
+			<div class="centro">
+				<h:outputText value="PNP: #{paradasBean.getTempoParadasMes('PNP')} hrs" class="formatodestaque"/>
+				<br />
+				<h:outputText value="PE: #{paradasBean.getTempoParadasMes('PE')} hrs" class="formatodestaque"/>
+			</div>
+			<div id="princapaloutros_comercial_mes">
+				<div id="graficoPNPPE" class="graph-med"></div>
+				<div align="center">
+					<div id="graficoPNPPE-legenda"></div>
+				</div>
+			</div>
+
+
+			<h:outputText
+				value="A PP esta diretamente relacionada ao PPE, onde PP gera Downtime e PPE gera downtime evitado, sendo assim:" />
+			<div class="centro">
+				<h:outputText value="PP: #{paradasBean.getTempoParadasMes('PP')} hrs" class="formatodestaque" />
+				<br />
+				<h:outputText value="PPE: #{paradasBean.getTempoParadasMes('PPE')} hrs" class="formatodestaque" />
+			</div>
+			<div id="princapaloutros_comercial_mes">
+				<div id="graficoPPEPP" class="graph-med"></div>
+				<div align="center">
+					<div id="graficoPPEPP-legenda"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	//<![CDATA[
+$(function () {
+    var d1 = #{paradasBean.getParadas("PNP")};
+    var d2 = #{paradasBean.getParadas("PE")};
+    var d3 = [];
+
+    for (var i = 0; i <d1.length; i ++)
+		d3.push([d1[i][0], d2[i][1] + d1[i][1]]);
+    
+    var options = {
+            legend:{         
+                container:$("#graficoPNPPE-legenda"),
+                noColumns:3,
+            },
+            xaxis: {
+            	mode: "time",
+            	minTickSize: [1, "month"]
+            },
+            yaxis: {           
+            	tickDecimals: 0
+
+            },
+            bars:{
+            	align: "center"
+            	}
+    }
+
+    
+    $.plot($("#graficoPNPPE"), [
+        {
+            label: "PNP", color:"red", data: d1,
+            bars: { show: true, lineWidth: 8 },
+	},
+	{
+            label: "PE", color:"blue", data: d2,
+            bars: { show: true, lineWidth: 8 }
+	},
+	{
+            label: "Saldo", color:"yellow", data: d3,
+            lines: { show: true },
+	    points: { show: true }
+	}
+	
+    ],options
+);
+});
+//]]> 
+</script>
+	<script type="text/javascript">
+	//<![CDATA[
+$(function () {
+    var d1 = #{paradasBean.getParadas("PP")};
+    var d2 = #{paradasBean.getParadas("PPE")};
+    var d3 = [];
+
+    for (var i = 0; i <d1.length; i ++)
+		d3.push([d1[i][0], d2[i][1] + d1[i][1]]);
+
+    var options = {
+            legend:{         
+                container:$("#graficoPPEPP-legenda"),
+                noColumns:3,
+            },
+            xaxis: {
+            	mode: "time",
+            	minTickSize: [1, "month"]
+            },
+            yaxis: {           
+            	tickDecimals: 0
+
+            },
+            bars:{
+            	align: "center"
+            	}
+    }
+
+                       
+    $.plot($("#graficoPPEPP"), [
+        {
+            label: "PP", color:"red", data: d1,
+            bars: { show: true, lineWidth: 8 },
+	},
+	{
+            label: "PPE", color:"blue", data: d2,
+            bars: { show: true, lineWidth: 8 }
+	},
+	{
+            label: "Saldo", color:"yellow", data: d3,
+            lines: { show: true },
+	    points: { show: true }
+	}
+	
+    ],options
+);
+});
+//]]> 
+</script>
+	<script type="text/javascript">
+	//<![CDATA[
+
+$(function () {
+    var d1 = #{paradasBean.getParadasAcumulado("PE")};
+    var options = {
+            xaxis: {
+            	mode: "time",
+            	minTickSize: [1, "month"]
+            }
+    }
+
+    $.plot($("#graficoAcumuladoAno"), [
+        {
+           label: "Parada Evitadas", color:"blue", data: d1,
+            bars: { show: true, lineWidth: 16 }
+        }
+    ],options);
+});
+
+//]]> 
+</script>
+</ui:composition>

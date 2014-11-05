@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div id='sumario'>
+		<p class="sub-titulo1 centro">Sumário</p>
+		<ul class="lista">
+			<li>1. Introdução</li>
+			<li>2. Resumo do Atendimento</li>
+			<li>	
+				<ul>
+					<li>2.1 Indicadores do Atendimento</li>
+					<li>2.2 Chamados por Solicitante</li>
+					<li>2.3 Tipo de Chamados</li>
+					<li>2.4 Chamados em Aberto</li>
+					<li>2.5 Chamados Fechados</li>
+					<li>2.6 Chamados por Host</li>
+				</ul>
+			</li>
+			
+			<li>3. Workload</li>
+			<li style="display: #{workloadBean.getCapHosts(3) == null ? 'none' : 'list-item'}">
+				<ul>
+					<ui:repeat value="#{workloadBean.getCapHosts(3)}" var="h" varStatus="statusHost">
+					<li>3.#{statusHost.index+1} Host: #{h.host}
+						<ul>
+							<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia">
+							<li>3.#{statusHost.index+1}.#{statusInstancia.index+1} Instância: #{i.instancia}
+								<ul>
+									<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico">
+									<li>3.#{statusHost.index+1}.#{statusInstancia.index+1}.#{statusGrafico.index+1} #{g.titulo}</li>
+									</ui:repeat>
+								</ul>
+							</li>
+							</ui:repeat>
+						</ul>
+					</li>
+					</ui:repeat>
+				</ul>
+			</li>
+			<li>4. Tamanho do banco de dados</li>
+			<li style="display: #{workloadBean.getCapHosts(4) == null ? 'none' : 'list-item'}">
+				<ul>
+					<ui:repeat value="#{workloadBean.getCapHosts(4)}" var="h" varStatus="statusHost">
+					<li>4.#{statusHost.index+1} Host: #{h.host}
+						<ul>
+							<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia">
+							<li>4.#{statusHost.index+1}.#{statusInstancia.index+1} Instância: #{i.instancia}
+							</li>
+							</ui:repeat>
+						</ul>
+					</li>
+					</ui:repeat>
+				</ul>
+			</li>
+			
+			<li>5. Resumo de Paradas</li>
+			<li>
+				<ul>
+					<li>5.1 Paradas Evitadas (PE)</li>
+					<li>5.2 Paradas Não Programadas (PNP)</li>
+					<li>5.3 Paradas Programadas Estratégicas (PPE)</li>
+					<li>5.4 Paradas Programadas (PP)</li>
+					<li>5.5 Totais</li>
+				</ul>
+			</li>		
+		</ul>
+	</div>
+</ui:composition>

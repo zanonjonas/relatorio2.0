@@ -1,0 +1,53 @@
+.default-table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.default-table-header {
+	text-align: center;
+	background: none repeat scroll 0 0 #4f81bd;
+	border: 1px  #FFFFFF;
+	padding: 16px;
+	color: white;
+}
+
+.default-table-footer {
+	text-align: center;
+	background: none repeat scroll 0 0 #4f81bd;
+	border: 1px  #FFFFFF;
+	padding: 2px;
+	font-stretch: normal;
+	font-weight: bold;
+	color: white;
+}
+
+
+.default-table-odd-row {
+	background: none repeat scroll 0 0 #b8cce4;
+	border: 1px solid #FFFFFF;
+}
+
+.default-table-even-row {
+	background: none repeat scroll 0 0 #dce6f1;
+	border: 1px solid #FFFFFF;
+}
+
+.evenRow {
+	background-color: #F5F5DC;
+}
+
+.oddRow {
+	background-color: #FFE4C4;
+}
+
+.celluleLeft {
+	text-align: left;
+}
+
+.celluleRight {
+	text-align: right;
+}
+
+.celluleCenter {
+	text-align: center;
+}

@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+
+.titulo {
+	font-size: 50px;
+}
+
+.sub-titulo1 {
+	font-size: 25px;
+	padding-top:20px;
+}
+
+.sub-titulo2 {
+	font-size: 20px;
+	padding-top:20px;
+}
+
+.quebrapagina {
+	page-break-before: always;
+}
+
+.centro {
+	text-align: center;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.formatodestaque {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.formato1 {
+	font-size: 19px;
+}
+
+.formato2 {
+	font-size: 40px;
+	color: red;
+}
+
+.lista{
+	font-size:18px;
+	list-style-type:none;
+}
+
+.lista li{
+	margin-bottom:10px;
+}
+
+.lista ul{
+	font-size: 15px;
+	margin-bottom: 2px;
+	list-style-type: none;
+}

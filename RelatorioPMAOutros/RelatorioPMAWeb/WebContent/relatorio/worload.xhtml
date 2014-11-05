@@ -1,0 +1,282 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div id='workload' class="quebrapagina">
+		<p class="sub-titulo1">3 WorkLoad</p>
+		<h:outputText value="Não há dados coletados." rendered="#{empty workloadBean.getCapHosts(3)}" />
+		<h:outputScript library="js" name="jquery.js" target="head" />
+		<h:outputScript library="js" name="jquery.flot.js" target="head" />
+		<h:outputScript library="js" name="jquery.flot.orderBars.js"
+			target="head" />
+		<h:outputStylesheet library="css" name="grafico.css" target="head" />
+			
+		<ui:repeat value="#{workloadBean.getCapHosts(3)}" var="h" varStatus="statusHost">
+			<div>
+				<p class="sub-titulo2">3.#{statusHost.index+1} Host: #{h.host}</p>
+			</div> 
+			<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia">
+				<div>
+					<p class="sub-titulo2">3.#{statusHost.index+1}.#{statusInstancia.index+1} Instância: #{i.instancia}</p>
+				</div> 
+				<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico">
+			  		<h:outputScript rendered="#{g.mesAno == 1 and g.tipoCalculo == 1}">
+						//Grafico mensal
+						$(function () {
+						    var previousPoint;
+						  	d1 = #{workloadBean.getTf(i.id,g.controleId,1)};
+						   	d2 = #{workloadBean.getTf(i.id,g.controleId,2)};
+						   	d3 = #{workloadBean.getTf(i.id,g.controleId,3)};
+						    var ds = new Array();
+						    var options = {
+						            legend:{         
+						                container:$("##{g.controleId}#{g.tipoCalculo}-legendaworkload"),
+						                noColumns:3,
+						            },
+						            grid:{
+						                hoverable:true,
+						            },
+						            xaxis: {
+						            	min: 0.5,
+						            	max: #{workloadBean.diasNoMes}.5,
+						            	ticks: #{workloadBean.diasNoMes},
+						            	tickDecimals: 0,
+						            	autoscaleMargin: 100
+						            },
+						            yaxis: {           
+						            	tickDecimals: 0
+						            },
+						            bars:{
+						            	align: "center" // or "center"
+						            	}
+						    }
+						    
+						    ds.push({
+						     	label: "#{workloadBean.getLegenda(i.id,g.controleId,1)}", 
+								color: "#191970",
+						        data:d1,
+						        bars: {
+						            show: true, 
+						            lineWidth: 2, 
+						            barWidth: 0.05,  
+						            order: 1,
+						        }
+						    });
+						    ds.push({
+						     	label: "#{workloadBean.getLegenda(i.id,g.controleId,2)}", 
+								color: "#CD3333",
+						        data:d2,
+						        bars: {
+						            show: true, 
+						            lineWidth: 2, 
+						            barWidth: 0.05,  
+						            order: 2
+						        }
+						    });
+						    ds.push({
+						     	label: "#{workloadBean.getLegenda(i.id,g.controleId,3)}", 
+						    	color: "#4F94CD",
+						        data:d3,
+						        bars: {
+						            show: true, 
+						            lineWidth: 2, 
+						            barWidth: 0.05,  
+						            order: 3
+						        }
+						    });     
+						    //Display graph
+						    $.plot($("##{g.controleId}#{g.tipoCalculo}-graficoworkload"), ds, options);
+						
+						});  		
+			  		</h:outputScript>
+					<h:outputScript rendered="#{g.mesAno == 1 and g.tipoCalculo == 2}">
+						//Grafico mensal com duas metricas apenas
+						$(function () {
+						    var previousPoint;
+						  	d1 = #{workloadBean.getTf(i.id,g.controleId,1)};
+						   	d2 = #{workloadBean.getTf(i.id,g.controleId,2)};
+						    var ds = new Array();
+						    var options = {
+						            legend:{         
+						                container:$("##{g.controleId}#{g.tipoCalculo}-legendaworkload"),
+						                noColumns:3,
+						            },
+						            grid:{
+						                hoverable:true,
+						            },
+						            xaxis: {
+						            	min: 0.5,
+						            	max: #{workloadBean.diasNoMes}.5,
+						            	ticks: #{workloadBean.diasNoMes},
+						            	tickDecimals: 0,
+						            	autoscaleMargin: 100
+						            },
+						            yaxis: {           
+						            	tickDecimals: 0
+						
+						            },
+						            bars:{
+						            	align: "center" // or "center"
+						            	}
+						    }
+						    
+						    ds.push({
+						     	label: "#{workloadBean.getLegenda(i.id,g.controleId,1)}", 
+								color: "#191970",
+						        data:d1,
+						        bars: {
+						            show: true, 
+						            lineWidth: 2, 
+						            barWidth: 0.05,  
+						            order: 1,
+						        }
+						    });
+						    ds.push({
+						     	label: "#{workloadBean.getLegenda(i.id,g.controleId,2)}", 
+								color: "#CD3333",
+						        data:d2,
+						        bars: {
+						            show: true, 
+						            lineWidth: 2, 
+						            barWidth: 0.05,  
+						            order: 2
+						        }
+						    });
+						    //Display graph
+						    $.plot($("##{g.controleId}#{g.tipoCalculo}-graficoworkload"), ds, options);
+						
+						});  		
+			  		</h:outputScript>
+			  		<h:outputScript rendered="#{g.mesAno == 2 and g.tipoCalculo == 1}">
+						//Grafico anual
+						$(function () {
+						    var previousPoint;
+						    d1 = #{workloadBean.getTf(i.id,g.controleId,1)};
+						   	d2 = #{workloadBean.getTf(i.id,g.controleId,2)};
+						   	d3 = #{workloadBean.getTf(i.id,g.controleId,3)};
+						    var ds = new Array();
+						    var options = {
+						            legend:{         
+						                container:$("##{g.controleId}#{g.tipoCalculo}-legendaworkload"),
+						                noColumns:3,
+						            },
+						            xaxis: {
+						            	mode: "time",
+						            	minTickSize: [1, "month"],
+        								timeformat: "%b %y"
+						            },
+						            yaxis: {           
+						            	tickDecimals: 0
+						
+						            },
+						            bars:{
+  										align: "center"
+						            	}
+						    }
+						    
+						    ds.push({
+						     	label: "#{workloadBean.getLegenda(i.id,g.controleId,1)}", 
+						        color: "#191970",
+						        data:d1,
+						        bars: {
+						            show: true, 
+						            lineWidth: 6, 
+						            barWidth: 0.05, 
+						            order: 1,
+						        }
+						    });
+						    ds.push({
+						     	label: "#{workloadBean.getLegenda(i.id,g.controleId,2)}", 
+								color: "#CD3333",
+						        data:d2,
+						        bars: {
+						            show: true, 
+						            lineWidth: 6, 
+						             barWidth: 0.05, 
+						            order: 2
+						        }
+						    });
+						    ds.push({
+						     	label: "#{workloadBean.getLegenda(i.id,g.controleId,3)}", 
+						    	color: "#4F94CD",
+						        data:d3,
+						        bars: {
+						            show: true, 
+						            lineWidth: 6, 
+						             barWidth: 0.05, 
+						            order: 3
+						        }
+						    });     
+						    //Display graph
+						    $.plot($("##{g.controleId}#{g.tipoCalculo}-graficoworkload"), ds, options);
+						
+						});  		
+			  		</h:outputScript>
+					<h:outputScript rendered="#{g.mesAno == 2 and g.tipoCalculo == 2}">
+						//Grafico anual com duas metricas apenas
+						$(function () {
+						    var previousPoint;
+						    d1 = #{workloadBean.getTf(i.id,g.controleId,1)};
+						   	d2 = #{workloadBean.getTf(i.id,g.controleId,2)};
+						    var ds = new Array();
+						    var options = {
+						            legend:{         
+						                container:$("##{g.controleId}#{g.tipoCalculo}-legendaworkload"),
+						                noColumns:3,
+						            },
+						            xaxis: {
+						            	mode: "time",
+						            	minTickSize: [1, "month"],
+        								timeformat: "%b %y"
+						            },
+						            yaxis: {           
+						            	tickDecimals: 0
+						
+						            },
+						            bars:{
+						            	align: "center"
+						            	}
+						    }
+						    
+						    ds.push({
+						     	label: "#{workloadBean.getLegenda(i.id,g.controleId,1)}", 
+						        color: "#191970",
+						        data:d1,
+						        bars: {
+						            show: true, 
+						            lineWidth: 6, 
+						            order: 1,
+						        }
+						    });
+						    ds.push({
+						     	label: "#{workloadBean.getLegenda(i.id,g.controleId,2)}", 
+								color: "#CD3333",
+						        data:d2,
+						        bars: {
+						            show: true, 
+						            lineWidth: 6, 
+						            order: 2
+						        }
+						    });
+						    //Display graph
+						    $.plot($("##{g.controleId}#{g.tipoCalculo}-graficoworkload"), ds, options);
+						});  		
+			  		</h:outputScript>  		
+					<div>
+						<p class="sub-titulo2">3.#{statusHost.index+1}.#{statusInstancia.index+1}.#{statusGrafico.index+1} #{g.titulo}</p>
+						<h:outputText value="#{g.descricao}" />
+						<br />
+						<h:outputText value="Mês corrente:" rendered="#{g.mesAno == 1 and g.capitulo == 3}"/>
+						<div>
+							<div id="#{g.controleId}#{g.tipoCalculo}-graficoworkload" class="graph-gnd"></div>
+							<div align="center">
+								<div id="#{g.controleId}#{g.tipoCalculo}-legendaworkload"></div>
+							</div>
+						</div>
+					</div>  		
+				</ui:repeat>
+			</ui:repeat>
+		</ui:repeat>		
+	</div>
+
+</ui:composition>

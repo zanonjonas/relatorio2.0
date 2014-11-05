@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div id='capasize'>
+		<div id='banner'>
+			<div id='logopax'>
+				<h:graphicImage library="images" name="t4.png" id='capabannerimg'/>
+			</div>
+			<div id='logocliente' class="centro">
+				<h:graphicImage library="images" name="#{capaBean.logoCliente}"
+					class="logocapa" />
+			</div>
+		</div>
+
+		<div id='titulos'>
+			<div id='titul1' class="centro">
+				<h:outputText styleClass="titulo"
+					value="#{capaBean.tituloRelatorio}" />
+			</div>
+			<div id='titul2' class="centro ">
+				<h:outputText styleClass="titulo"
+					value="#{capaBean.subtituloRelatorio}" />
+			</div>
+		</div>
+		<div id='rodapecapa'>
+			<div id='textoversao'>
+				<h:outputText value="#{capaBean.dataCriacao}" />
+				<br />
+				<h:outputText value="#{capaBean.textoVersao}" />
+			</div>
+			<div id='imagemrodape'>
+				<h:graphicImage library="images" name="t2.png" id="caparodapeimg"/>
+			</div>
+		</div>
+	</div>
+</ui:composition>

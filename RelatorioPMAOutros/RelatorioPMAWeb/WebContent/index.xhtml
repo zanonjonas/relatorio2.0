@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+</h:head>
+<h:body>
+	<h:form id="report">
+		<h:selectOneMenu id="Clientes" value="#{clientesBean.idCliente}"
+			valueChangeListener="#{clientesBean.updateListaMes}"
+			onchange="submit()" hideNoSelectionOption="true">
+			<f:selectItem itemLabel="Escolha um cliente" itemValue="0"
+				noSelectionOption="true" />
+			<f:selectItems value="#{clientesBean.listaClientes}" var="i"
+				itemLabel="#{i.nome}" itemValue="#{i.id}" />
+		</h:selectOneMenu>
+		<h:selectOneMenu id="MesRelatorio"
+			value="#{clientesBean.mesRelatorio}" hideNoSelectionOption="true" rendered="#{clientesBean.update}">
+			<f:selectItem itemLabel="Escolha um mês" itemValue="0"
+				noSelectionOption="true" />
+			<f:selectItems value="#{clientesBean.listaMes}" var="i"
+				itemLabel="#{i.labelMes}" itemValue="#{i.mesString}" />
+		</h:selectOneMenu>
+		<h:commandButton id="reportButton" action="report" value="Executar" rendered="#{clientesBean.update}"/>
+	</h:form>
+</h:body>
+</html>
