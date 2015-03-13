@@ -148,7 +148,8 @@ public class ParadasDAO {
                      "                        AND d.host_id = e.host_id " + 
 					 "                        AND e.host_id = f.host_id " +
 					 "                        AND f.ambiente_id = 3) " + //producao
-					 "group by to_char(c.data_insercao, 'yyyy')";
+					 "group by to_char(c.data_insercao, 'yyyy') " +
+					 "order by 1 asc";
 		pstmt = connection.getPreparedStatement(sql);
 		try {
 			pstmt.setInt(1, idCliente);

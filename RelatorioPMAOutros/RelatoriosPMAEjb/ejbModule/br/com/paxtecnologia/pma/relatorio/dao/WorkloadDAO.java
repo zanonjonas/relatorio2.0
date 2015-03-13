@@ -89,7 +89,7 @@ public class WorkloadDAO {
 		try {
 			while (rs.next()) {
 				temp = new DBSizeTabelaVO();
-				temp.setMes(rs.getString("data_mes"));
+				temp.setData(rs.getString("data_mes"));
 				temp.setValor(rs.getString("valor"));
 				retorno.add(temp);
 			}
