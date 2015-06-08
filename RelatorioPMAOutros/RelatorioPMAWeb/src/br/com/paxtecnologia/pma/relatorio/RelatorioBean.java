@@ -20,6 +20,7 @@ public class RelatorioBean {
 		private RelatorioEjb relatorioEjb;
 		
 		private Integer relatorioId;
+		private Integer projetoJiraId;
 		private String mesRelatorio;
 		private List <RelatorioVO> listaRelatorios;
 		private List<MesRelatorioVO> listaMes;
@@ -80,8 +81,13 @@ public class RelatorioBean {
 		public void setMesRelatorio(String mesRelatorio) {
 			this.mesRelatorio = mesRelatorio;
 		}
-		
-		
 
-	
+		public Integer getProjetoJiraId() {
+			return projetoJiraId;
+		}
+
+		public void setProjetoJiraId(Integer projetoJiraId) {
+			this.projetoJiraId = projetoJiraId;
+		}
+		
 }

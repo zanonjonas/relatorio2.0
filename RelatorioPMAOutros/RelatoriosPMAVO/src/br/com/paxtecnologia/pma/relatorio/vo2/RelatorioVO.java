@@ -5,7 +5,7 @@ public class RelatorioVO {
 	private Integer id;
 	private String nome;
 	private String displayName;
-	private ProjetoJiraVO projetoJiraVO;
+	private Integer projetoJiraId;
 	private TipoRelatorioVO tipoRelatorioVO;
 	private String menuEntry;
 	
@@ -27,12 +27,7 @@ public class RelatorioVO {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
-	public ProjetoJiraVO getProjetoJiraVO() {
-		return projetoJiraVO;
-	}
-	public void setProjetoJiraVO(ProjetoJiraVO projetoJiraVO) {
-		this.projetoJiraVO = projetoJiraVO;
-	}
+
 	public TipoRelatorioVO getTipoRelatorioVO() {
 		return tipoRelatorioVO;
 	}
@@ -44,6 +39,12 @@ public class RelatorioVO {
 	}
 	public void setMenuEntry(String menuEntry) {
 		this.menuEntry = menuEntry;
+	}
+	public Integer getProjetoJiraId() {
+		return projetoJiraId;
+	}
+	public void setProjetoJiraId(Integer projetoJiraId) {
+		this.projetoJiraId = projetoJiraId;
 	}
 	
 	

@@ -21,9 +21,10 @@ public class RelatorioDAO {
 
 		PreparedStatement pstmt;
 		
-		String sql = "select pj.cliente_display_name || ' / ' || r.display_name menu_entry" +
-				           ",r.relatorio_id" +
-				       "from rel_relatorios r" +
+		String sql = "select pj.cliente_display_name || ' / ' || r.display_name menu_entry " +
+				           ",r.relatorio_id " +
+				           ",pj.projeto_jira_id " +
+				       "from rel_relatorios r " +
 				           ",rel_projeto_jira pj " +
 				      "where r.projeto_jira_id=pj.projeto_jira_id " +
 				   "order by 1";		
@@ -37,6 +38,7 @@ public class RelatorioDAO {
 				temp = new RelatorioVO();
 				temp.setId(rs.getInt("relatorio_id"));
 				temp.setMenuEntry(rs.getString("menu_entry"));
+				temp.setProjetoJiraId(rs.getInt("projeto_jira_id"));
 				
 				retorno.add(temp);
 			}
