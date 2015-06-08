@@ -8,22 +8,24 @@
 </h:head>
 <h:body>
 	<h:form id="report">
-		<h:selectOneMenu id="Clientes" value="#{clientesBean.idCliente}"
-			valueChangeListener="#{clientesBean.updateListaMes}"
+		<h:selectOneMenu id="Clientes" value="#{relatorioBean.relatorioId}"
+			valueChangeListener="#{relatorioBean.updateListaMes}"
 			onchange="submit()" hideNoSelectionOption="true">
-			<f:selectItem itemLabel="Escolha um cliente" itemValue="0"
+			<f:selectItem itemLabel="Escolha um Relatório" itemValue="0"
 				noSelectionOption="true" />
-			<f:selectItems value="#{clientesBean.listaClientes}" var="i"
-				itemLabel="#{i.nome}" itemValue="#{i.id}" />
+			<f:selectItems value="#{relatorioBean.listaRelatoriosMenu}" var="i"
+				itemLabel="#{i.menuEntry}" itemValue="#{i.id}" />
 		</h:selectOneMenu>
+
+		
 		<h:selectOneMenu id="MesRelatorio"
-			value="#{clientesBean.mesRelatorio}" hideNoSelectionOption="true" rendered="#{clientesBean.update}">
+			value="#{relatorioBean.mesRelatorio}" hideNoSelectionOption="true" rendered="#{relatorioBean.update}">
 			<f:selectItem itemLabel="Escolha um mês" itemValue="0"
 				noSelectionOption="true" />
-			<f:selectItems value="#{clientesBean.listaMes}" var="i"
+			<f:selectItems value="#{relatorioBean.listaMes}" var="i"
 				itemLabel="#{i.labelMes}" itemValue="#{i.mesString}" />
 		</h:selectOneMenu>
-		<h:commandButton id="reportButton" action="report" value="Executar" rendered="#{clientesBean.update}"/>
+		<h:commandButton id="reportButton" action="report" value="Executar" rendered="#{relatorioBean.update}"/>
 	</h:form>
 </h:body>
 </html>
