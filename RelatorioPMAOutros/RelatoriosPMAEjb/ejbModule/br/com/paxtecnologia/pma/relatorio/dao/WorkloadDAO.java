@@ -542,9 +542,6 @@ public class WorkloadDAO {
 				temp.setId(rs.getInt("host_id"));
 				temp.setDescricao(rs.getString("descricao"));
 				temp.setHostName(rs.getString("hostname"));
-				temp.setQuantidadeCPU(rs.getInt("num_cpu"));
-				temp.setQuantidadeMemoria(rs.getInt("qtd_memoria"));
-				temp.setTipoCPU(rs.getString("tipo_cpu"));
 				temp.setInstanciaVO(getInstancias(idCliente,temp.getId(),capitulo));
 				host.add(temp);
 			}

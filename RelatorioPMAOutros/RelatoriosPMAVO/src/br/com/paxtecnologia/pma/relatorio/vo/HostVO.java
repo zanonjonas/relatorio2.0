@@ -8,10 +8,12 @@ public class HostVO {
 	private String host;
 	private String descricao;
 	private String hostName;
-	private String tipoCPU;
-	private Integer quantidadeCPU;
-	private Integer quantidadeMemoria;
 	private List<InstanciaVO> instanciaVO;
+	
+	
+	
+	
+	
 	
 	public Integer getId() {
 		return id;
@@ -43,22 +45,5 @@ public class HostVO {
 	public void setHostName(String hostName) {
 		this.hostName = hostName;
 	}
-	public String getTipoCPU() {
-		return tipoCPU;
-	}
-	public void setTipoCPU(String tipoCPU) {
-		this.tipoCPU = tipoCPU;
-	}
-	public Integer getQuantidadeCPU() {
-		return quantidadeCPU;
-	}
-	public void setQuantidadeCPU(Integer quantidadeCPU) {
-		this.quantidadeCPU = quantidadeCPU;
-	}
-	public Integer getQuantidadeMemoria() {
-		return quantidadeMemoria;
-	}
-	public void setQuantidadeMemoria(Integer quantidadeMemoria) {
-		this.quantidadeMemoria = quantidadeMemoria;
-	}
+
 }
