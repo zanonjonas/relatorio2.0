@@ -1,19 +1,26 @@
 package br.com.paxtecnologia.pma.relatorio.vo2;
 
+import java.util.List;
+
+
 public class RelatorioVO {
 
-	private Integer id;
+	public Integer relatorioId;
 	private String nome;
 	private String displayName;
 	private Integer projetoJiraId;
-	private TipoRelatorioVO tipoRelatorioVO;
+	private Integer tipoRelatorioId;
 	private String menuEntry;
+	private String tituloCapa;
+	private String logoStr;
+	private String clienteDisplayName;
+	private List<CapituloVO> capituloVO;
 	
-	public Integer getId() {
-		return id;
+	public Integer getRelatorioId() {
+		return relatorioId;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public void setRelatorioId(Integer relatorioId) {
+		this.relatorioId = relatorioId;
 	}
 	public String getNome() {
 		return nome;
@@ -28,12 +35,6 @@ public class RelatorioVO {
 		this.displayName = displayName;
 	}
 
-	public TipoRelatorioVO getTipoRelatorioVO() {
-		return tipoRelatorioVO;
-	}
-	public void setTipoRelatorioVO(TipoRelatorioVO tipoRelatorioVO) {
-		this.tipoRelatorioVO = tipoRelatorioVO;
-	}
 	public String getMenuEntry() {
 		return menuEntry;
 	}
@@ -46,7 +47,35 @@ public class RelatorioVO {
 	public void setProjetoJiraId(Integer projetoJiraId) {
 		this.projetoJiraId = projetoJiraId;
 	}
-	
-	
+	public Integer getTipoRelatorioId() {
+		return tipoRelatorioId;
+	}
+	public void setTipoRelatorioId(Integer tipoRelatorioId) {
+		this.tipoRelatorioId = tipoRelatorioId;
+	}
+	public String getTituloCapa() {
+		return tituloCapa;
+	}
+	public void setTituloCapa(String tituloCapa) {
+		this.tituloCapa = tituloCapa;
+	}
+	public String getLogoStr() {
+		return logoStr;
+	}
+	public void setLogoStr(String logoStr) {
+		this.logoStr = logoStr;
+	}
+	public String getClienteDisplayName() {
+		return clienteDisplayName;
+	}
+	public void setClienteDisplayName(String clienteDisplayName) {
+		this.clienteDisplayName = clienteDisplayName;
+	}
+	public List<CapituloVO> getCapituloVO() {
+		return capituloVO;
+	}
+	public void setCapituloVO(List<CapituloVO> capituloVO) {
+		this.capituloVO = capituloVO;
+	}
 	
 }

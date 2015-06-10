@@ -13,7 +13,6 @@ import br.com.paxtecnologia.pma.relatorio.vo2.RelatorioVO;
 
 @ManagedBean(name = "relatorioBean")
 @SessionScoped
-
 public class RelatorioBean {
 
 		@EJB 
@@ -25,6 +24,10 @@ public class RelatorioBean {
 		private List <RelatorioVO> listaRelatorios;
 		private List<MesRelatorioVO> listaMes;
 		private Boolean update = false;
+		private String nome;
+		private String tituloCapa;
+		private String logoStr;
+		private String clienteDisplayName;
 		
 		public Boolean getUpdate() {
 			return update;
@@ -50,9 +53,9 @@ public class RelatorioBean {
 			setListaMes(generateListaMes((Integer) newValue));
 		}
 
-		private List<MesRelatorioVO> generateListaMes(Integer projetoJiraId) {
+		private List<MesRelatorioVO> generateListaMes(Integer relatorioId) {
 			setUpdate(false);
-			listaMes = relatorioEjb.getListaMes(projetoJiraId);
+			listaMes = relatorioEjb.getListaMes(relatorioId);
 			setUpdate(true);
 			return listaMes;
 		}
@@ -64,14 +67,6 @@ public class RelatorioBean {
 		
 		public void setListaMes(List<MesRelatorioVO> listaMes) {
 			this.listaMes = listaMes;
-		}
-	
-		public Integer getRelatorioId() {
-			return relatorioId;
-		}
-
-		public void setRelatorioId(Integer relatorioId) {
-			this.relatorioId = relatorioId;
 		}
 
 		public String getMesRelatorio() {
@@ -89,5 +84,54 @@ public class RelatorioBean {
 		public void setProjetoJiraId(Integer projetoJiraId) {
 			this.projetoJiraId = projetoJiraId;
 		}
+
+		public String getNome() {
+			return nome;
+		}
+
+		public void setNome(String nome) {
+			this.nome = nome;
+		}
+		
+		public RelatorioVO getRelatorioById(Integer id, String mesRelatorio){
+			
+			return relatorioEjb.getRelatorioById(id,mesRelatorio);
+			
+		}
+
+		public String getTituloCapa() {
+			return tituloCapa;
+		}
+
+		public void setTituloCapa(String tituloCapa) {
+			this.tituloCapa = tituloCapa;
+		}
+
+		public String getLogoStr() {
+			return logoStr;
+		}
+
+		public void setLogoStr(String logoStr) {
+			this.logoStr = logoStr;
+		}
+
+		public String getClienteDisplayName() {
+			return clienteDisplayName;
+		}
+
+		public void setClienteDisplayName(String clienteDisplayName) {
+			this.clienteDisplayName = clienteDisplayName;
+		}
+
+		public Integer getRelatorioId() {
+			return relatorioId;
+		}
+
+		public void setRelatorioId(Integer relatorioId) {
+			this.relatorioId = relatorioId;
+		}
+		
+		
+		
 		
 }

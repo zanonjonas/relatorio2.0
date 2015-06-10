@@ -8,16 +8,15 @@
 </h:head>
 <h:body>
 	<h:form id="report">
-		<h:selectOneMenu id="Clientes" value="#{relatorioBean.projetoJiraId}"
+		<h:selectOneMenu id="Clientes" value="#{relatorioBean.relatorioId}"
 			valueChangeListener="#{relatorioBean.updateListaMes}"
 			onchange="submit()" hideNoSelectionOption="true">
 			<f:selectItem itemLabel="Escolha um Relatório" itemValue="0"
 				noSelectionOption="true" />
 			<f:selectItems value="#{relatorioBean.listaRelatoriosMenu}" var="i"
-				itemLabel="#{i.menuEntry}" itemValue="#{i.projetoJiraId}" />
+				itemLabel="#{i.menuEntry}" itemValue="#{i.relatorioId}" />
 		</h:selectOneMenu>
 
-		
 		<h:selectOneMenu id="MesRelatorio"
 			value="#{relatorioBean.mesRelatorio}" hideNoSelectionOption="true" rendered="#{relatorioBean.update}">
 			<f:selectItem itemLabel="Escolha um mês" itemValue="0"

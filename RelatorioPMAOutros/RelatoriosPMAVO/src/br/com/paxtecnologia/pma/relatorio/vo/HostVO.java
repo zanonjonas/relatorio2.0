@@ -5,15 +5,10 @@ import java.util.List;
 public class HostVO {
 	
 	private Integer id;
-	private String host;
-	private String descricao;
-	private String hostName;
+	private String nome;
+	private String displayName;
+	private String projetoJiraId;
 	private List<InstanciaVO> instanciaVO;
-	
-	
-	
-	
-	
 	
 	public Integer getId() {
 		return id;
@@ -21,11 +16,23 @@ public class HostVO {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getHost() {
-		return host;
+	public String getNome() {
+		return nome;
 	}
-	public void setHost(String host) {
-		this.host = host;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	public String getProjetoJiraId() {
+		return projetoJiraId;
+	}
+	public void setProjetoJiraId(String projetoJiraId) {
+		this.projetoJiraId = projetoJiraId;
 	}
 	public List<InstanciaVO> getInstanciaVO() {
 		return instanciaVO;
@@ -33,17 +40,6 @@ public class HostVO {
 	public void setInstanciaVO(List<InstanciaVO> instanciaVO) {
 		this.instanciaVO = instanciaVO;
 	}
-	public String getDescricao() {
-		return descricao;
-	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	public String getHostName() {
-		return hostName;
-	}
-	public void setHostName(String hostName) {
-		this.hostName = hostName;
-	}
+	
 
 }

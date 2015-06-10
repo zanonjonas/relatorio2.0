@@ -4,7 +4,8 @@ import java.util.List;
 
 public class InstanciaVO {
 	private Integer id;
-	private String instancia;
+	private String nome;
+	private String displayName;
 	private String descricao;
 	private List<GraficoVO> graficoVO;
 	
@@ -14,11 +15,17 @@ public class InstanciaVO {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getInstancia() {
-		return instancia;
+	public String getNome() {
+		return nome;
 	}
-	public void setInstancia(String instancia) {
-		this.instancia = instancia;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 	public List<GraficoVO> getGraficoVO() {
 		return graficoVO;
@@ -32,4 +39,7 @@ public class InstanciaVO {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+
+	
 }
