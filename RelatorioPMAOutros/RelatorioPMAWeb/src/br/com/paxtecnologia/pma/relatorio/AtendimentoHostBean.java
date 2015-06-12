@@ -17,10 +17,10 @@ public class AtendimentoHostBean {
 	@EJB
 	private AtendimentoEjb atendimentoEjb;
 
-	@ManagedProperty(value = "#{clientesBean.idCliente}")
-	private Integer idCliente;
+	@ManagedProperty(value = "#{relatorioBean.projetoJiraId}")
+	private Integer projetoJiraId;
 
-	@ManagedProperty(value = "#{clientesBean.mesRelatorio}")
+	@ManagedProperty(value = "#{relatorioBean.mesRelatorio}")
 	private String mesRelatorio;
 
 	private List<ChamadoQuantidadeVO> listaHost;
@@ -32,7 +32,7 @@ public class AtendimentoHostBean {
 	private String graficoFechados;
 
 	public void setIdCliente(Integer idCliente) {
-		this.idCliente = idCliente;
+		this.projetoJiraId = idCliente;
 	}
 
 	public void setMesRelatorio(String mesRelatorio) {
@@ -41,51 +41,61 @@ public class AtendimentoHostBean {
 
 	public Integer getQtdeChamadosAbertosComHost() {
 		if (qtdeChamadosAbertosComHost == null) {
-			qtdeChamadosAbertosComHost = atendimentoEjb.getQtdeChamadosAbertosHost(idCliente, mesRelatorio);
+			qtdeChamadosAbertosComHost = atendimentoEjb.getQtdeChamadosAbertosHost(projetoJiraId, mesRelatorio);
 		}
 		return qtdeChamadosAbertosComHost;
 	}
 
 	public Double getPorcentoAbertosComHost() {
 		if (porcentoAbertosComHost == null) {
-			porcentoAbertosComHost = atendimentoEjb.getPorcentoAbertosComHost(idCliente, mesRelatorio);
+			porcentoAbertosComHost = atendimentoEjb.getPorcentoAbertosComHost(projetoJiraId, mesRelatorio);
 		}
 		return porcentoAbertosComHost;
 	}
 
 	public Double getPorcentoFechadosComHost() {
 		if (porcentoFechadosComHost == null) {
-			porcentoFechadosComHost = atendimentoEjb.getPorcentoFechadosComHost(idCliente, mesRelatorio);
+			porcentoFechadosComHost = atendimentoEjb.getPorcentoFechadosComHost(projetoJiraId, mesRelatorio);
 		}
 		return porcentoFechadosComHost;
 	}
 
 	public Integer getQtdeChamadosFechadosComHost() {
 		if (qtdeChamadosFechadosComHost == null) {
-			qtdeChamadosFechadosComHost = atendimentoEjb.getQtdeChamadosFechadosHost(idCliente, mesRelatorio);
+			qtdeChamadosFechadosComHost = atendimentoEjb.getQtdeChamadosFechadosHost(projetoJiraId, mesRelatorio);
 		}
 		return qtdeChamadosFechadosComHost;
 	}
 
 	public List<ChamadoQuantidadeVO> getListaHost() {
 		if (listaHost == null) {
-			listaHost = atendimentoEjb.getListaChamadoHost(idCliente, mesRelatorio);
+			listaHost = atendimentoEjb.getListaChamadoHost(projetoJiraId, mesRelatorio);
 		}
 		return listaHost;
 	}
 
 	public String getGraficoAbertos() {
 		if (graficoAbertos == null) {
-			graficoAbertos = atendimentoEjb.getGraficoAbertosHost(idCliente, mesRelatorio);
+			graficoAbertos = atendimentoEjb.getGraficoAbertosHost(projetoJiraId, mesRelatorio);
 		}
 		return graficoAbertos;
 	}
 
 	public String getGraficoFechados() {
 		if (graficoFechados == null) {
-			graficoFechados = atendimentoEjb.getGraficoFechadosHost(idCliente, mesRelatorio);
+			graficoFechados = atendimentoEjb.getGraficoFechadosHost(projetoJiraId, mesRelatorio);
 		}
 		return graficoFechados;
 	}
 
+	public Integer getProjetoJiraId() {
+		return projetoJiraId;
+	}
+
+	public void setProjetoJiraId(Integer projetoJiraId) {
+		this.projetoJiraId = projetoJiraId;
+	}
+
+	
+	
 }

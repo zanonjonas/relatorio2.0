@@ -13,6 +13,9 @@ public class GraficoVO {
 	private Integer ordemPlot;
 	private String descricaoCustomizada;
 	private String nickName;
+	private String capitulo;
+	private Integer tipoPeriodoId;
+
 	
 	private List<GraficoLinhaVO> graficoLinhaVO;
 
@@ -79,7 +82,23 @@ public class GraficoVO {
 	public void setGraficoLinhaVO(List<GraficoLinhaVO> graficoLinhaVO) {
 		this.graficoLinhaVO = graficoLinhaVO;
 	}
-	
+
+	public String getCapitulo() {
+		return capitulo;
+	}
+
+	public void setCapitulo(String capitulo) {
+		this.capitulo = capitulo;
+	}
+
+	public Integer getTipoPeriodoId() {
+		return tipoPeriodoId;
+	}
+
+	public void setTipoPeriodoId(Integer tipoPeriodoId) {
+		this.tipoPeriodoId = tipoPeriodoId;
+	}
+
 	
 
 }

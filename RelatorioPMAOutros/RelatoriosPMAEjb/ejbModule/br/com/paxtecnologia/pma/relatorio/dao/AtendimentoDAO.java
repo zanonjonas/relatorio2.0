@@ -203,8 +203,8 @@ public class AtendimentoDAO {
 		List<String> retorno = new ArrayList<String>();
 		connection = new DataSourcePMA();
 		PreparedStatement pstmt;
-		String sql = "SELECT c.nome_fantasia "
-					+"  FROM pmp_task a, pmp_task_host b, pmp_host c "
+		String sql = "SELECT c.nome "
+					+"  FROM pmp_task a, pmp_task_host b, rel_hosts c "
 					+" WHERE a.task_id = b.task_id "
 					+"   AND c.host_id = b.host_id "
 					+"   AND a.cliente_id = ? "
@@ -224,7 +224,7 @@ public class AtendimentoDAO {
 		try {
 			while (rs.next()) {
 				temp = new String();
-				temp = rs.getString("nome_fantasia");
+				temp = rs.getString("nome");
 				retorno.add(temp);
 			}
 		} catch (SQLException e) {
@@ -240,8 +240,8 @@ public class AtendimentoDAO {
 		List<String> retorno = new ArrayList<String>();
 		connection = new DataSourcePMA();
 		PreparedStatement pstmt;
-		String sql = "SELECT c.nome_fantasia "
-					+"  FROM pmp_task a, pmp_task_host b, pmp_host c "
+		String sql = "SELECT c.nome "
+					+"  FROM pmp_task a, pmp_task_host b, rel_hosts c "
 					+" WHERE a.task_id = b.task_id "
 					+"   AND c.host_id = b.host_id "
 					+"   AND a.cliente_id = ? "
@@ -261,7 +261,7 @@ public class AtendimentoDAO {
 		try {
 			while (rs.next()) {
 				temp = new String();
-				temp = rs.getString("nome_fantasia");
+				temp = rs.getString("nome");
 				retorno.add(temp);
 			}
 		} catch (SQLException e) {

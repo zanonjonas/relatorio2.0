@@ -78,6 +78,9 @@ public class RelatorioBean {
 		}
 
 		public Integer getProjetoJiraId() {
+			
+			projetoJiraId = relatorioEjb.getProjetoJiraIdByRelatorioId(getRelatorioId());
+			
 			return projetoJiraId;
 		}
 

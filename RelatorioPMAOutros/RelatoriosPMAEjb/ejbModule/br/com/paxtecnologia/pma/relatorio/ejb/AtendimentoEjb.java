@@ -93,6 +93,8 @@ public class AtendimentoEjb {
 			controleMesCliente.put("controleMesCliente", mesRelatorio);
 			qtdeChamadosFechados = listaChamadoFechado.size();
 		}
+		
+	
 		return qtdeChamadosFechados;
 	}
 

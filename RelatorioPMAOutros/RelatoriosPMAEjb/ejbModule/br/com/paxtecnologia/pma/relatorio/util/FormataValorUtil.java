@@ -7,6 +7,7 @@ public class FormataValorUtil {
 	public static String converterDoubleString(double valor) {  
 	    DecimalFormat fmt = new DecimalFormat("0.00");      
 	    String string = fmt.format(valor);  
+	
 	    String[] part = string.split("[,]");  
 	    String retorno = part[0]+"."+part[1];  
 	    return retorno;  

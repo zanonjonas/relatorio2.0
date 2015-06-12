@@ -22,10 +22,10 @@ public class AtendimentoBean {
 	@EJB
 	private AtendimentoEjb atendimentoEjb;
 
-	@ManagedProperty(value = "#{clientesBean.idCliente}")
-	private Integer idCliente;
+	@ManagedProperty(value = "#{relatorioBean.projetoJiraId}")
+	private Integer projetoJiraId;
 
-	@ManagedProperty(value = "#{clientesBean.mesRelatorio}")
+	@ManagedProperty(value = "#{relatorioBean.mesRelatorio}")
 	private String mesRelatorio;
 
 	private List<ChamadoQuantidadeVO> listaSolicitante;
@@ -48,33 +48,24 @@ public class AtendimentoBean {
 	private Double porcentagemFechadoTipo;
 	private String tempoMedio;
 
-	public void setMesRelatorio(String mesRelatorio) {
-		this.mesRelatorio = mesRelatorio;
-	}
-
-	public void setIdCliente(Integer idCliente) {
-		this.idCliente = idCliente;
-	}
-
-	// 2.1
 
 	public Integer getQtdeChamadosAbertos() {
 		if (qtdeChamadosAbertos == null) {
-			qtdeChamadosAbertos = atendimentoEjb.getQtdeChamadosAbertos(idCliente, mesRelatorio);
+			qtdeChamadosAbertos = atendimentoEjb.getQtdeChamadosAbertos(projetoJiraId, mesRelatorio);
 		}
 		return qtdeChamadosAbertos;
 	}
 
 	public Integer getQtdeChamadosFechados() {
 		if (qtdeChamadosFechados == null) {
-			qtdeChamadosFechados = atendimentoEjb.getQtdeChamadosFechados(idCliente, mesRelatorio);
+			qtdeChamadosFechados = atendimentoEjb.getQtdeChamadosFechados(projetoJiraId, mesRelatorio);
 		}
 		return qtdeChamadosFechados;
 	}
 
 	public String getPorcentoFechados() {
 		if (porcentoFechados == null) {
-			Double porcento = atendimentoEjb.getPorcentagemChamadosFechados(idCliente, mesRelatorio) * 100;
+			Double porcento = atendimentoEjb.getPorcentagemChamadosFechados(projetoJiraId, mesRelatorio) * 100;
 			porcentoFechados = FormataValorUtil.converterDoubleString(porcento) + '%';
 		}
 		return porcentoFechados;
@@ -82,14 +73,14 @@ public class AtendimentoBean {
 
 	private Object getQtdeChamadosEmAberto() {
 		if (qtdeChamadosEmAbertos == null) {
-			qtdeChamadosEmAbertos = atendimentoEjb.getQtdeChamadosEmAberto(idCliente, mesRelatorio);
+			qtdeChamadosEmAbertos = atendimentoEjb.getQtdeChamadosEmAberto(projetoJiraId, mesRelatorio);
 		}
 		return qtdeChamadosEmAbertos;
 	}
 
 	public String getPorcentoEmAbertos() {
 		if (porcentoEmAbertos == null) {
-			Double porcento = atendimentoEjb.getPorcentagemChamadosEmAbertos(idCliente, mesRelatorio) * 100;
+			Double porcento = atendimentoEjb.getPorcentagemChamadosEmAbertos(projetoJiraId, mesRelatorio) * 100;
 			porcentoEmAbertos = FormataValorUtil.converterDoubleString(porcento) + '%';
 		}
 		return porcentoEmAbertos;
@@ -97,7 +88,7 @@ public class AtendimentoBean {
 	
 	public String getTempoMedio(){
 		if (tempoMedio == null){
-			Double tempo = atendimentoEjb.getTempoMedio(idCliente, mesRelatorio);
+			Double tempo = atendimentoEjb.getTempoMedio(projetoJiraId, mesRelatorio);
 			tempoMedio = FormataValorUtil.converterDoubleString(tempo) + " h";
 		}
 		return tempoMedio;
@@ -143,35 +134,35 @@ public class AtendimentoBean {
 
 	public List<ChamadoQuantidadeVO> getListaSolicitante() {
 		if (listaSolicitante == null) {
-			listaSolicitante = atendimentoEjb.getListaSolicitantes(idCliente,mesRelatorio);
+			listaSolicitante = atendimentoEjb.getListaSolicitantes(projetoJiraId,mesRelatorio);
 		}
 		return listaSolicitante;
 	}
 
 	public Integer getQtdeChamadosAbertosSolicitante() {
 		if (qtdeChamadosAbertosSolicitante == null) {
-			qtdeChamadosAbertosSolicitante = atendimentoEjb.getQtdeChamadosAbertosSolicitante(idCliente, mesRelatorio);
+			qtdeChamadosAbertosSolicitante = atendimentoEjb.getQtdeChamadosAbertosSolicitante(projetoJiraId, mesRelatorio);
 		}
 		return qtdeChamadosAbertosSolicitante;
 	}
 
 	public Integer getQtdeChamadosFechadosSolicitante() {
 		if (qtdeChamadosFechadosSolicitante == null) {
-			qtdeChamadosFechadosSolicitante = atendimentoEjb.getQtdeChamadosFechadosSolicitante(idCliente, mesRelatorio);
+			qtdeChamadosFechadosSolicitante = atendimentoEjb.getQtdeChamadosFechadosSolicitante(projetoJiraId, mesRelatorio);
 		}
 		return qtdeChamadosFechadosSolicitante;
 	}
 
 	public Double getPorcentoAbertosSolicitante() {
 		if (porcentoAbertosSolicitante == null) {
-			porcentoAbertosSolicitante = atendimentoEjb.getPorcentoAbertosSolicitante(idCliente, mesRelatorio);
+			porcentoAbertosSolicitante = atendimentoEjb.getPorcentoAbertosSolicitante(projetoJiraId, mesRelatorio);
 		}
 		return porcentoAbertosSolicitante;
 	}
 
 	public Double getPorcentoFechadosSolicitante() {
 		if (porcentoFechadosSolicitante == null) {
-			porcentoFechadosSolicitante = atendimentoEjb.getPorcentoFechadosSolicitante(idCliente, mesRelatorio);
+			porcentoFechadosSolicitante = atendimentoEjb.getPorcentoFechadosSolicitante(projetoJiraId, mesRelatorio);
 		}
 		return porcentoFechadosSolicitante;
 	}
@@ -180,49 +171,49 @@ public class AtendimentoBean {
 
 	public List<ChamadoQuantidadeVO> getListaTipoChamado() {
 		if (listaTipoChamado == null) {
-			listaTipoChamado = atendimentoEjb.getListaChamadoTipo(idCliente, mesRelatorio);
+			listaTipoChamado = atendimentoEjb.getListaChamadoTipo(projetoJiraId, mesRelatorio);
 		}
 		return listaTipoChamado;
 	}
 
 	public List<ChamadoVO> getListaChamadosEmAbertos() {
 		if (listaChamadoEmAberto == null) {
-			listaChamadoEmAberto = atendimentoEjb.getListaChamadosEmAbertos(idCliente, mesRelatorio);
+			listaChamadoEmAberto = atendimentoEjb.getListaChamadosEmAbertos(projetoJiraId, mesRelatorio);
 		}
 		return listaChamadoEmAberto;
 	}
 
 	public List<ChamadoVO> getListaChamadosFechados() {
 		if (listaChamadoFechado == null) {
-			listaChamadoFechado = atendimentoEjb.getListaChamadosFechados(idCliente, mesRelatorio);
+			listaChamadoFechado = atendimentoEjb.getListaChamadosFechados(projetoJiraId, mesRelatorio);
 		}
 		return listaChamadoFechado;
 	}
 
 	public Integer getQtdeChamadosAbertosTipo() {
 		if (qtdeChamadosAbertosTipo == null) {
-			qtdeChamadosAbertosTipo = atendimentoEjb.getQtdeChamadosAbertosTipo(idCliente, mesRelatorio);
+			qtdeChamadosAbertosTipo = atendimentoEjb.getQtdeChamadosAbertosTipo(projetoJiraId, mesRelatorio);
 		}
 		return qtdeChamadosAbertosTipo;
 	}
 
 	public Integer getQtdeChamadosFechadosTipo() {
 		if (qtdeChamadosFechadosTipo == null) {
-			qtdeChamadosFechadosTipo = atendimentoEjb.getQtdeChamadosFechadosTipo(idCliente, mesRelatorio);
+			qtdeChamadosFechadosTipo = atendimentoEjb.getQtdeChamadosFechadosTipo(projetoJiraId, mesRelatorio);
 		}
 		return qtdeChamadosFechadosTipo;
 	}
 
 	public Double getPorcentagemAbertoTipo() {
 		if (porcentagemAbertoTipo == null) {
-			porcentagemAbertoTipo = atendimentoEjb.getPorcentagemChamadosAbertosTipo(idCliente, mesRelatorio);
+			porcentagemAbertoTipo = atendimentoEjb.getPorcentagemChamadosAbertosTipo(projetoJiraId, mesRelatorio);
 		}
 		return porcentagemAbertoTipo;
 	}
 
 	public Double getPorcentagemFechadoTipo() {
 		if (porcentagemFechadoTipo == null) {
-			porcentagemFechadoTipo = atendimentoEjb.getPorcentagemChamadosFechadosTipo(idCliente, mesRelatorio);
+			porcentagemFechadoTipo = atendimentoEjb.getPorcentagemChamadosFechadosTipo(projetoJiraId, mesRelatorio);
 		}
 		return porcentagemFechadoTipo;
 	}
@@ -231,16 +222,42 @@ public class AtendimentoBean {
 
 	public Integer getQtdeChamadosEmAbertos() {
 		if(qtdeChamadosEmAbertos == null){
-			qtdeChamadosEmAbertos = atendimentoEjb.getQtdeChamadosEmAberto(idCliente, mesRelatorio);
+			qtdeChamadosEmAbertos = atendimentoEjb.getQtdeChamadosEmAberto(projetoJiraId, mesRelatorio);
 		}
 		return qtdeChamadosEmAbertos;
 	}
 
 	public Double getPorcentoAbertos() {
 		if (porcentoAbertos == null) {
-			porcentoAbertos = atendimentoEjb.getPorcentagemChamadosAbertos(idCliente, mesRelatorio);
+			porcentoAbertos = atendimentoEjb.getPorcentagemChamadosAbertos(projetoJiraId, mesRelatorio);
 		}
 		return porcentoAbertos;
 	}
 
+	public Integer getRelatorioId() {
+		return projetoJiraId;
+	}
+
+	public void setRelatorioId(Integer relatorioId) {
+		this.projetoJiraId = relatorioId;
+	}
+
+	public String getMesRelatorio() {
+		return mesRelatorio;
+	}
+
+	public void setMesRelatorio(String mesRelatorio) {
+		this.mesRelatorio = mesRelatorio;
+	}
+
+	public Integer getProjetoJiraId() {
+		return projetoJiraId;
+	}
+
+	public void setProjetoJiraId(Integer projetoJiraId) {
+		this.projetoJiraId = projetoJiraId;
+	}
+
+	
+	
 }

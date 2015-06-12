@@ -91,13 +91,6 @@ public class ParadasDAO {
 					 "  AND c.data_insercao between ? and ? " +
 					 "  AND trunc(c.data_insercao,'MM') = trunc(a.data_inicio_parada,'MM') " +
 					 "  AND regexp_like(b.tipo_parada,?) " +
-					 "  AND EXISTS (select 1 from pmp_task_host d, " + 
-                     "                            pmp_host e, " +
-                     "                            pmp_host_ambiente f " + 
-                     "                      where a.task_id = d.task_id " + 
-                     "                        AND d.host_id = e.host_id " + 
-					 "                        AND e.host_id = f.host_id " +
-					 "                        AND f.ambiente_id = 3)" + //producao
 					 "ORDER BY c.data_criacao"; 
 		pstmt = connection.getPreparedStatement(sql);
 		try {
@@ -141,13 +134,6 @@ public class ParadasDAO {
 					 "  AND c.cliente_id = ? " +
 					 "  AND regexp_like(b.tipo_parada,?) " +
 					 "  AND c.data_insercao <= ?" +
-					 "  AND EXISTS (select 1 from pmp_task_host d, " + 
-                     "                            pmp_host e, " +
-                     "                            pmp_host_ambiente f " + 
-                     "                      where a.task_id = d.task_id " + 
-                     "                        AND d.host_id = e.host_id " + 
-					 "                        AND e.host_id = f.host_id " +
-					 "                        AND f.ambiente_id = 3) " + //producao
 					 "group by to_char(c.data_insercao, 'yyyy') " +
 					 "order by 1 asc";
 		pstmt = connection.getPreparedStatement(sql);

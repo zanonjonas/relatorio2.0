@@ -257,4 +257,40 @@ public class RelatorioDAO {
 		return retorno;
 	}
 	
+	public Integer getProjetoJiraIdByRelatorioId(Integer relatorioId){
+		
+		Integer retorno = null;
+		
+		connection = new DataSourcePMA();
+		
+		PreparedStatement pstmt;
+		
+		String sql = "select  projeto_jira_id " +
+				       "from rel_relatorios a " +
+				       "where a.relatorio_id = ?";
+		pstmt = connection.getPreparedStatement(sql);
+		try {
+			pstmt.setInt(1, relatorioId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ResultSet rs = connection.executaQuery(pstmt);
+
+		try {
+			while (rs.next()) {
+				
+				retorno = rs.getInt("projeto_jira_id");
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connection.closeConnection(pstmt);
+		return retorno;
+
+		
+	}
+	
 }

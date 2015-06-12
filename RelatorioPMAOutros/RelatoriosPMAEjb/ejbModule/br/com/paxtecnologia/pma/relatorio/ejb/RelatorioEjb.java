@@ -53,6 +53,11 @@ public class RelatorioEjb {
 		
 	}
 	
+	public Integer getProjetoJiraIdByRelatorioId(Integer relatorioId){
+		
+		return relatorioDAO.getProjetoJiraIdByRelatorioId(relatorioId);
+		
+	}
 	
 	
 }

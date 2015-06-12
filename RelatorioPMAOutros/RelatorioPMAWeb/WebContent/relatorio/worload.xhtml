@@ -10,6 +10,10 @@
 		<h:outputScript library="js" name="jquery.flot.orderBars.js"
 			target="head" />
 		<h:outputStylesheet library="css" name="grafico.css" target="head" />
+		
+		<ui:repeat value="#{relatorioBean.getRelatorioById(relatorioBean.relatorioId,relatorioBean.mesRelatorio)}" var="r" varStatus="statusRelatorio">
+		
+		
 			
 		<ui:repeat value="#{workloadBean.getCapHosts(3)}" var="h" varStatus="statusHost">
 			<div>
