@@ -1,0 +1,153 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div id='workload' class="quebrapagina">
+		<p class="sub-titulo1">3 WorkLoad</p>
+			
+		<h:outputScript library="js" name="jquery.js" target="head" />
+		<h:outputScript library="js" name="jquery.flot.js" target="head" />
+		<h:outputScript library="js" name="jquery.flot.orderBars.js"
+			target="head" />
+		<h:outputStylesheet library="css" name="grafico.css" target="head" />
+		
+		 <ui:repeat value="#{relatorioBean.getRelatorioById(relatorioBean.relatorioId,relatorioBean.mesRelatorio)}" var="r" varStatus="statusRelatorio">
+			 
+			<ui:repeat value="#{r.capituloVO}" var="c" varStatus="statusCapitulo" >
+
+
+				<h:panelGroup layout="block" rendered='#{c.capitulo == "3"}'>
+
+					
+					<ui:repeat value="#{c.hostVO}" var="h" varStatus="statusHost" >
+					
+						<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia" >
+						
+							<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico" >
+							
+							<h:panelGroup layout="block" rendered='#{g.capitulo == "3" and g.tipoPeriodoId == 1}'>
+							
+							Grafico: <h:outputText value="#{g.tituloDisplayName}"/>
+							<br>
+							</br>
+							Tipo periodo Id: <h:outputText value="#{g.tipoPeriodoId}"/>
+							<br>
+							</br>
+							Capitulo: <h:outputText value="#{g.capitulo}"/>
+							<br>
+							</br>		
+							<br>
+							</br>
+							<br>
+							</br>
+							<br>
+							</br>
+							<br>
+							</br>
+									<h:outputScript rendered="#{g.tipoPeriodoId == 1}">
+										//Grafico mensal
+										$(function () {
+										    var previousPoint;
+									
+									
+								
+								<ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
+								<ui:remove>
+											<!-- 
+										  	d#{l.ordem} = #{workloadBean.getTf(i.id,g.tipoPeriodoId,l.ordem)};
+											 -->
+											 
+											 </ui:remove>
+								</ui:repeat>
+										
+																
+										    var ds = new Array();
+										    var options = {
+										            legend:{         
+										                //container:$("##{g.graficoId}-legendaworkload"),
+										                noColumns:#{g.graficoLinhaVO.size()},
+										            },
+										            grid:{
+										                hoverable:true,
+										            },
+										            xaxis: {
+										            	min: 0.5,
+										            	
+										            	tickDecimals: 0,
+										            	autoscaleMargin: 100
+										            },
+										            yaxis: {           
+										            	tickDecimals: 0
+										            },
+										            bars:{
+										            	align: "center" // or "center"
+										            	}
+										    }
+										    
+										    
+										    
+										    <ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
+											    
+											      
+											    ds.push({
+											    <ui:remove>
+											    <!--
+											     	label: "#{workloadBean.getLegenda(i.id,g.tipoPeriodoId,l.ordem)}" 
+											     	-->
+											     	
+											     	</ui:remove>
+													color: "#{l.cor}",
+											        data:d#{l.ordem},
+											        bars: {
+											            show: true, 
+											            lineWidth: 2, 
+											            barWidth: 0.05,  
+											            order: #{l.ordem},
+											        }
+											    });
+											    
+											    
+										    </ui:repeat>
+										    
+										    
+										    //Display graph
+										    $.plot($("##{g.graficoId}-graficoworkload"), ds, options);
+										    });
+										    </h:outputScript>
+										
+										
+											<div>
+											<!-- 
+												<p class="sub-titulo2">3.#{statusHost.index+1}.#{statusInstancia.index+1}.#{statusGrafico.index+1} #{g.tituloDisplayName}</p>
+												<h:outputText value="#{g.tituloDisplayName}" />
+												<br />
+												<h:outputText value="Mês corrente:" rendered="#{g.tipoPeriodoId == 1}"/>
+												<div>
+													<div id="#{g.graficoId}-graficoworkload" class="graph-gnd"></div>
+													<div align="center">
+														<div id="#{g.graficoId}-legendaworkload"></div>
+													</div>
+												</div>
+												-->
+											</div>  	
+										 
+									</h:panelGroup>		
+								</ui:repeat>
+							</ui:repeat>
+						</ui:repeat>
+
+					
+						
+					</h:panelGroup>
+								
+				</ui:repeat>
+
+	
+
+			</ui:repeat>
+			
+			
+		 
+		
+	</div>
+</ui:composition>
