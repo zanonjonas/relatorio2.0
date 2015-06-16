@@ -11,10 +11,13 @@ import br.com.paxtecnologia.pma.relatorio.ejb.RelatorioEjb;
 import br.com.paxtecnologia.pma.relatorio.vo.MesRelatorioVO;
 import br.com.paxtecnologia.pma.relatorio.vo2.RelatorioVO;
 
-@ManagedBean(name = "relatorioBean")
-@SessionScoped
-public class RelatorioBean {
 
+@SessionScoped
+@ManagedBean(name = "relatorioBean")
+public class RelatorioBean {
+		
+		private static final long serialVersionUID = 1L;	
+	
 		@EJB 
 		private RelatorioEjb relatorioEjb;
 		

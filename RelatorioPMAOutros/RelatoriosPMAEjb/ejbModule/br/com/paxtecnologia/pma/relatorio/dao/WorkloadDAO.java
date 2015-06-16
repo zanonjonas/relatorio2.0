@@ -264,7 +264,7 @@ public class WorkloadDAO {
 		}
 		String sql = "SELECT to_char(data, 'mm/yyyy') data, avg(valor_medio) valor "
 				+ "FROM pmp_workload_mes "
-				+ "WHERE data between ? and ? "
+				+ "WHERE trunc(data,'MM') between trunc(?,'MM') and trunc(?,'MM') "
 				+ "AND metrica_link_id = ? "
 				+ "AND hora in (" + builder.deleteCharAt( builder.length() -1 ).toString() + ") "
 				+ "GROUP BY to_char(data, 'mm/yyyy') ORDER BY to_date(data, 'mm/yyyy')";

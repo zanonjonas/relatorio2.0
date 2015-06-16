@@ -12,6 +12,51 @@ public class GraficoLinhaDAO {
 
 	private DataSourcePMA connection;
 	
+	public String getZabbixItemKey(Integer graficoId, Integer linhaId){
+		
+		connection = new DataSourcePMA();
+		String retorno = null;
+		
+		PreparedStatement pstmt;
+		
+		String sql = "select distinct nvl(regexp_substr(iz.item_key_zabbix, '\\[(.+)\\]', 1,1,NULL,1) ,iz.item_key_zabbix) keyvalue " +
+				       "from rel_grafico_linha a " +
+				           ",rel_items_baseload b " +
+				           ",rel_itemsfromzabbix iz " +
+				      "where iz.item_zabbix_id=b.zabbix_itemid " +
+				        "and a.linha_id=b.linha_id " +
+				        "and a.linha_id=? " +
+				        "and b.grafico_id=?";
+		
+		pstmt = connection.getPreparedStatement(sql);
+		try {
+			pstmt.setInt(1, linhaId);
+			pstmt.setInt(2, graficoId);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ResultSet rs = connection.executaQuery(pstmt);
+		
+
+		
+		try {
+			while (rs.next()) {
+			
+				retorno = rs.getString("keyvalue");
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connection.closeConnection(pstmt);
+		
+		return retorno;
+	}
+
+		
 	public List<GraficoLinhaVO> getListaGraficoLinhaByGrfId(Integer graficoId){
 		List<GraficoLinhaVO> retorno = new ArrayList<GraficoLinhaVO>();
 		

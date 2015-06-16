@@ -203,6 +203,7 @@ public class WorkloadEjb {
 		}
 	}
 
+	// FEITO
 	private String getTfCalculo8as18(Integer metrica, String mesRelatorio, Integer idGraficoControle) {
 		List<TimeFrameVO> timeFrameList = null;
 		List<String> periodo = new ArrayList<String>();
@@ -225,7 +226,7 @@ public class WorkloadEjb {
 			return formataTimeFramAno(timeFrameList);
 		}
 	}
-
+	//FEITO
 	private String formataTimeFram(List<TimeFrameVO> timeFrameList) {
 		String saida = "[";
 		Iterator<TimeFrameVO> itTime = timeFrameList.iterator();
@@ -249,6 +250,7 @@ public class WorkloadEjb {
 		return saida;
 	}
 
+	//FEITO
 	private String formataTimeFramAno(List<TimeFrameVO> timeFrameList) {
 		String saida = "[";
 		Iterator<TimeFrameVO> itTime = timeFrameList.iterator();
@@ -265,6 +267,7 @@ public class WorkloadEjb {
 		return saida;
 	}
 	
+	//FEITO	
 	private String formataTimeFramAnoDBSize(List<TimeFrameVO> timeFrameList) {
 		String saida = "[";
 		Iterator<TimeFrameVO> itTime = timeFrameList.iterator();
