@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import br.com.paxtecnologia.pma.relatorio.ejb.GraficoEjb;
 import br.com.paxtecnologia.pma.relatorio.ejb.GraficoLinhaEjb;
 import br.com.paxtecnologia.pma.relatorio.ejb.LinhaValorEjb;
 
@@ -23,6 +24,11 @@ public class GraficoBean implements Serializable {
 
 	@EJB
 	private GraficoLinhaEjb graficoLinhaEjb;
+	
+	@EJB
+	private GraficoEjb graficoEjb;
+	
+	private Integer diasNoMes;
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -52,6 +58,13 @@ public class GraficoBean implements Serializable {
 
 	public void setMesRelatorio(String mesRelatorio) {
 		this.mesRelatorio = mesRelatorio;
+	}
+	
+	public Integer getDiasNoMes() {
+		
+			diasNoMes = graficoEjb.getDiasNoMes(mesRelatorio);
+		
+			return diasNoMes;
 	}
 	
 }

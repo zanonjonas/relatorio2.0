@@ -48,7 +48,7 @@ public class LinhaValorVO implements Comparator<LinhaValorVO>{
 		
 		Integer pos = Integer.parseInt(partsp[1]+partsp[0].replaceAll("/", "")); 
 		Integer neg = Integer.parseInt(partsn[1]+partsn[0].replaceAll("/", ""));
-		
+
 		return pos - neg;
 		
 	}

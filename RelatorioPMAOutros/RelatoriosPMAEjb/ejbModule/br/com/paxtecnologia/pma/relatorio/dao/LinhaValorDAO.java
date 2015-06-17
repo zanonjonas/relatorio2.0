@@ -33,6 +33,12 @@ public class LinhaValorDAO {
 				        "AND hora in (" + builder.deleteCharAt( builder.length() -1 ).toString() + ") " +
 				        "group by to_char(data,'dd/mm/yyyy')";
 		
+		System.err.println("linhaId "+ linhaId);
+		System.err.println("graficoId "+ graficoId);
+		System.err.println("mesRelatorio "+ mesRelatorio);
+		
+		System.err.println(sql);
+		
 		pstmt = connection.getPreparedStatement(sql);
 		try {
 			

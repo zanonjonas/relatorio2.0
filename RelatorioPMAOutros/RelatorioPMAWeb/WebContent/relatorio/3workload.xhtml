@@ -26,29 +26,14 @@
 							<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico" >
 							
 							<h:panelGroup layout="block" rendered='#{g.capitulo == "3"}'>
-							
-							Grafico: <h:outputText value="#{g.tituloDisplayName}"/>
-							<br>
-							</br>
-							Tipo periodo Id: <h:outputText value="#{g.tipoPeriodoId}"/>
-							<br>
-							</br>
-							Capitulo: <h:outputText value="#{g.capitulo}"/>
-							<br>
-							</br>		
-							<br>
-							</br>
 						
 									<h:outputScript rendered="#{g.tipoPeriodoId == 1}">
 										//Grafico mensal
 										$(function () {
 										    var previousPoint;
 									
-								<ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
-								
+								<ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >					
 									d#{l.ordem} = #{graficoBean.getLinhaValorJS(l.linhaId, g.graficoId, g.tipoPeriodoId, l.tipoConsolidacaoDadoId)};
-									
-								
 								</ui:repeat>
 										
 																
@@ -62,10 +47,11 @@
 										                hoverable:true,
 										            },
 										            xaxis: {
-										            	min: 0.5,
-										            	
-										            	tickDecimals: 0,
-										            	autoscaleMargin: 100
+				                                        min: 0.5,
+				                                        max: #{graficoBean.diasNoMes}.5,
+														ticks: #{graficoBean.diasNoMes},
+				                                        tickDecimals: 0,
+				                                        autoscaleMargin: 100
 										            },
 										            yaxis: {           	
 										            	tickDecimals: 0
@@ -83,7 +69,7 @@
 											    ds.push({
 											     	label: "#{graficoBean.parseLegenda(g.graficoId,l.linhaId,l.legenda)}", 
 													color: "#{l.cor}",
-											        data:d#{l.ordem},
+											        data: d#{l.ordem},
 											        bars: {
 											            show: true, 
 											            lineWidth: 2, 
@@ -108,70 +94,66 @@
 										$(function () {
 										    var previousPoint;
 									
-									
-								
-								<ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
-								
-											d#{l.ordem} = #{graficoBean.getLinhaValorJS(l.linhaId, g.graficoId, g.tipoPeriodoId, l.tipoConsolidacaoDadoId)};
-											 
-											 
-								</ui:repeat>
 										
-																
-										    var ds = new Array();
-										    var options = {
-										            legend:{         
-										                container:$("##{g.graficoId}-legendaworkload"),
-										                noColumns:#{g.graficoLinhaVO.size()},
-										            },
-										            grid:{
-										                hoverable:true,
-										            },
-										            xaxis: {
-										            	min: 0.5,
-										            	
-										            	tickDecimals: 0,
-										            	autoscaleMargin: 100
-										            },
-										            yaxis: {           
-										            	tickDecimals: 0
-										            },
-										            bars:{
-										            	align: "center" // or "center"
-										            	}
-										    }
-										    
-										    
-										    
-										    <ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
+									
+									<ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
+									
+												d#{l.ordem} = #{graficoBean.getLinhaValorJS(l.linhaId, g.graficoId, g.tipoPeriodoId, l.tipoConsolidacaoDadoId)};
+												 
+												 
+									</ui:repeat>
+											
+																	
+											    var ds = new Array();
+											    var options = {
+											            legend:{         
+											                container:$("##{g.graficoId}-legendaworkload"),
+											                noColumns:#{g.graficoLinhaVO.size()},
+											            },
+											            xaxis: {
+											            	mode: "time",
+															minTickSize: [1, "month"],
+															timeformat: "%b %y"
+											            },
+											            yaxis: {           
+											            	tickDecimals: 0
+											            },
+											            bars:{
+											            	align: "center" // or "center"
+											            	}
+											    }
 											    
-											      
-											    ds.push({
-													label: "#{graficoBean.parseLegenda(g.graficoId,l.linhaId,l.legenda)}",
-													color: "#{l.cor}",
-											        data:d#{l.ordem},
-											        bars: {
-											            show: true, 
-											            lineWidth: 2, 
-											            barWidth: 0.05,  
-											            order: #{l.ordem},
-											        }
+											    
+											    
+											    <ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
+												    
+												      
+												    ds.push({
+														label: "#{graficoBean.parseLegenda(g.graficoId,l.linhaId,l.legenda)}",
+														color: "#{l.cor}",
+												        data:d#{l.ordem},
+												        bars: {
+												            show: true, 
+												            lineWidth: 6, 
+												            barWidth: 0.05,  
+												            order: #{l.ordem},
+												        }
+												    });
+												    
+												    
+											    </ui:repeat>
+											    
+											    
+											    //Display graph
+											    $.plot($("##{g.graficoId}-graficoworkload"), ds, options);
 											    });
-											    
-											    
-										    </ui:repeat>
-										    
-										    
-										    //Display graph
-										    $.plot($("##{g.graficoId}-graficoworkload"), ds, options);
-										    });
 										    </h:outputScript>
 										    
 										
 										
 											<div>
 											 
-												<p class="sub-titulo2">3.#{statusHost.index+1}.#{statusInstancia.index+1}.#{statusGrafico.index+1} #{g.tituloDisplayName}</p>
+												<p class="sub-titulo2">3.#{statusHost.index+1}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName}</p>
 												<h:outputText value="#{g.tituloDisplayName}" />
 												<br />
 												<h:outputText value="Mês corrente:"/>

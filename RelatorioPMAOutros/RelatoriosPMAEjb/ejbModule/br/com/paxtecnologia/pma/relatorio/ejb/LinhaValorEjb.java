@@ -3,6 +3,7 @@ package br.com.paxtecnologia.pma.relatorio.ejb;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.ejb.Stateless;
 
 import br.com.paxtecnologia.pma.relatorio.dao.LinhaValorDAO;
 import br.com.paxtecnologia.pma.relatorio.vo.HostVO;
+import br.com.paxtecnologia.pma.relatorio.vo.TimeFrameVO;
 import br.com.paxtecnologia.pma.relatorio.vo2.LinhaValorVO;
 
 @Stateless
@@ -56,7 +58,10 @@ public class LinhaValorEjb {
 				return formataDsJSMes(listaLinhaValorVO);
 				
 			}if (tipoPeriodoId == 2) { // anual
-				return "Erro: Tipo de dado nao implementado.";
+				
+				listaLinhaValorVO = linhaValorDAO.getLinhaValorMesAnual(linhaId, graficoId, mesRelatorio);
+				
+				return formataDsJSAno(listaLinhaValorVO);
 				
 			}
 
@@ -102,6 +107,7 @@ public class LinhaValorEjb {
 		
 		case 6: // 8:00 as 18:00
 
+			
 			listaHoras.add(8);
 			listaHoras.add(9);
 			listaHoras.add(10);
@@ -150,6 +156,9 @@ public class LinhaValorEjb {
 	private String formataDsJSMes(List<LinhaValorVO> listaLinhaValorVO) {
 		String saida = "[";
 		Iterator<LinhaValorVO> itTime = listaLinhaValorVO.iterator();
+		
+		Collections.sort(listaLinhaValorVO, new LinhaValorVO());
+		
 		SimpleDateFormat sdfIn = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat sdfOut = new SimpleDateFormat("dd");
 		//DecimalFormat df = new DecimalFormat("###");
@@ -168,6 +177,8 @@ public class LinhaValorEjb {
 		saida = saida.substring(0,saida.length()-1);
 		saida = saida + "]";
 		
+		System.err.println(saida);
+		
 		return saida;
 	}
 	
@@ -175,6 +186,8 @@ public class LinhaValorEjb {
 	private String formataDsJSAno(List<LinhaValorVO> listaLinhaValorVO) {
 		String saida = "[";
 		Iterator<LinhaValorVO> itTime = listaLinhaValorVO.iterator();
+		Collections.sort(listaLinhaValorVO, new LinhaValorVO());
+		
 		SimpleDateFormat sdfIn = new SimpleDateFormat("MM/yyyy");
 		SimpleDateFormat sdfOut = new SimpleDateFormat("yyyy,MM");
 
@@ -184,9 +197,9 @@ public class LinhaValorEjb {
 			try {
 				saida = saida
 						+ "["
-						+ "(new Date("+ sdfOut.format(sdfIn.parse(linhaValorVO.getData()).getTime()) +")).getTime()"
+						+ "(new Date("+linhaValorVO.getData().substring(3, 7) +","+(Integer.parseInt(linhaValorVO.getData().substring(0, 2))-1)+")).getTime()"
 						+ "," + linhaValorVO.getValor() + "],";
-			} catch (ParseException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
