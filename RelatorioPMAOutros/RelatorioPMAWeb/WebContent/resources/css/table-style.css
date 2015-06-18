@@ -21,6 +21,17 @@
 	color: white;
 }
 
+.tr:nth-child(even) {
+    background: #dce6f1;
+	
+}
+
+.tr:nth-child(odd) {
+
+	background: #b8cce4;
+	
+	
+}
 
 .default-table-odd-row {
 	background: none repeat scroll 0 0 #b8cce4;

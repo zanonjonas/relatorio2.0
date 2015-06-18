@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.paxtecnologia.pma.relatorio.util.FormataDataUtil;
+import br.com.paxtecnologia.pma.relatorio.vo.DBSizeTabelaVO;
 import br.com.paxtecnologia.pma.relatorio.vo2.LinhaValorVO;
 
 public class LinhaValorDAO {
@@ -33,11 +34,6 @@ public class LinhaValorDAO {
 				        "AND hora in (" + builder.deleteCharAt( builder.length() -1 ).toString() + ") " +
 				        "group by to_char(data,'dd/mm/yyyy')";
 		
-		System.err.println("linhaId "+ linhaId);
-		System.err.println("graficoId "+ graficoId);
-		System.err.println("mesRelatorio "+ mesRelatorio);
-		
-		System.err.println(sql);
 		
 		pstmt = connection.getPreparedStatement(sql);
 		try {
@@ -102,6 +98,7 @@ public class LinhaValorDAO {
 			int index = 5;
 			for( Integer o : possibleValues ) {
 			   pstmt.setInt(  index++, o ); // or whatever it applies 
+			   
 			}			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -250,6 +247,83 @@ public class LinhaValorDAO {
 		return listaLinhaValor;
 	}
 
+	
+	public List<DBSizeTabelaVO> getTabelaDBsize(Integer graficoId, String mesRelatorio) {
+		List<DBSizeTabelaVO> listaDbSizeTabela = new ArrayList<DBSizeTabelaVO>();
+		connection = new DataSourcePMA();
+		PreparedStatement pstmt;
+		
+		String sql = "select antes.data antes_data " +
+				"      ,antes.valor antes_valor " +
+				"      ,depois.data depois_data " +
+				"      ,depois.valor depois_valor " +
+				"      ,depois.valor - antes.valor as variacaoabs " +
+				"      ,round((depois.valor - antes.valor)*100 /antes.valor,1) varicaopct " +
+				"      ,round(depois.valor*100/totaldisp.valor,2)  usadopct " +
+				"      ,totaldisp.valor totaldisp_valor " +
+				"from " +
+				"(select to_char(a.data,'mm/yyyy') data   " +
+				",a.valor_consolidado valor   " +
+				"from rel_grafico_dados_udm a, " +
+				"      rel_grafico_linha b " +
+				"where a.grafico_id= ? " +
+				"      and a.linha_id=b.linha_id " +
+				"      and b.ordem = 1 " +
+				"and trunc(a.data,'MM') = add_months(trunc(to_date(?,'yyyy-mm-dd'),'MM'),-1)) antes, " +
+				"(select to_char(a.data,'mm/yyyy') data   " +
+				",a.valor_consolidado valor   " +
+				"from rel_grafico_dados_udm a, " +
+				"      rel_grafico_linha b " +
+				"where a.grafico_id= ? " +
+				"      and a.linha_id=b.linha_id " +
+				"      and b.ordem = 1 " +
+				"and trunc(a.data,'MM') = trunc(to_date(?,'yyyy-mm-dd'),'MM')) depois, " +
+				"(select to_char(a.data,'mm/yyyy') data   " +
+				",a.valor_consolidado valor   " +
+				"from rel_grafico_dados_udm a, " +
+				"      rel_grafico_linha b " +
+				"where a.grafico_id= ? " +
+				"      and a.linha_id=b.linha_id " +
+				"      and b.ordem=2 " +
+				"and trunc(a.data,'MM') = trunc(to_date(?,'yyyy-mm-dd'),'MM')) totaldisp";
+
+		pstmt = connection.getPreparedStatement(sql);
+		try {
+			
+			pstmt.setInt(1, graficoId);
+			pstmt.setString(2, mesRelatorio);
+			pstmt.setInt(3, graficoId);
+			pstmt.setString(4, mesRelatorio);
+			pstmt.setInt(5, graficoId);
+			pstmt.setString(6, mesRelatorio);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ResultSet rs = connection.executaQuery(pstmt);
+		DBSizeTabelaVO temp;
+		try {
+			while (rs.next()) {
+				temp = new DBSizeTabelaVO();
+				temp.setMesA(rs.getString("antes_data"));
+				temp.setValorA(rs.getString("antes_valor"));
+				temp.setMesD(rs.getString("depois_data"));
+				temp.setValorD(rs.getString("depois_valor"));
+				temp.setVarAbs(rs.getString("variacaoabs"));
+				temp.setVarPct(rs.getDouble("varicaopct"));
+				temp.setUtlTotalPct(rs.getDouble("usadopct"));
+				temp.setEspTotal(rs.getString("totaldisp_valor"));
+				
+				listaDbSizeTabela.add(temp);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connection.closeConnection(pstmt);
+		return listaDbSizeTabela;
+	}
 
 	
 }

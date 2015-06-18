@@ -1,6 +1,7 @@
 package br.com.paxtecnologia.pma.relatorio;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -10,6 +11,8 @@ import javax.faces.bean.ViewScoped;
 import br.com.paxtecnologia.pma.relatorio.ejb.GraficoEjb;
 import br.com.paxtecnologia.pma.relatorio.ejb.GraficoLinhaEjb;
 import br.com.paxtecnologia.pma.relatorio.ejb.LinhaValorEjb;
+import br.com.paxtecnologia.pma.relatorio.util.FormataValorUtil;
+import br.com.paxtecnologia.pma.relatorio.vo.DBSizeTabelaVO;
 
 
 @ViewScoped
@@ -32,11 +35,11 @@ public class GraficoBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public String getLinhaValorJS(Integer linhaId, Integer graficoId, Integer tipoPeriodoId, Integer tipoConsolidacaoDadoId){
+	public String getLinhaValorJS(Integer linhaId, Integer graficoId, Integer tipoPeriodoId, Integer tipoConsolidacaoDadoId, Boolean isByte){
 		
 		String retorno = null;
 		
-		retorno = linhaValorEjb.getLinhaValorJS(linhaId, graficoId, mesRelatorio, tipoPeriodoId, tipoConsolidacaoDadoId);
+		retorno = linhaValorEjb.getLinhaValorJS(linhaId, graficoId, mesRelatorio, tipoPeriodoId, tipoConsolidacaoDadoId, isByte);
 	
 		return retorno;
 		
@@ -66,5 +69,12 @@ public class GraficoBean implements Serializable {
 		
 			return diasNoMes;
 	}
+	
+	public List<DBSizeTabelaVO> getTabelaDBsize(Integer graficoId) {
+		
+		return linhaValorEjb.getTabelaDBsize(graficoId,mesRelatorio);
+		
+	}
+		
 	
 }

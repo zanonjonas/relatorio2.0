@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.ejb.Stateless;
 
 import br.com.paxtecnologia.pma.relatorio.dao.LinhaValorDAO;
+import br.com.paxtecnologia.pma.relatorio.util.FormataValorUtil;
+import br.com.paxtecnologia.pma.relatorio.vo.DBSizeTabelaVO;
 import br.com.paxtecnologia.pma.relatorio.vo.HostVO;
 import br.com.paxtecnologia.pma.relatorio.vo.TimeFrameVO;
 import br.com.paxtecnologia.pma.relatorio.vo2.LinhaValorVO;
@@ -26,7 +28,7 @@ public class LinhaValorEjb {
 	private Integer diasNoMes;
 	private Long diferenca;
 	
-	public String getLinhaValorJS(Integer linhaId, Integer graficoId, String mesRelatorio, Integer tipoPeriodoId, Integer tipoConsolidacaoDadoId) {
+	public String getLinhaValorJS(Integer linhaId, Integer graficoId, String mesRelatorio, Integer tipoPeriodoId, Integer tipoConsolidacaoDadoId, Boolean isByte) {
 		List<LinhaValorVO> listaLinhaValorVO = null;
 		List<Integer> listaHoras = getListaHorasTF(tipoConsolidacaoDadoId);
 	
@@ -45,7 +47,7 @@ public class LinhaValorEjb {
 				
 				listaLinhaValorVO = linhaValorDAO.getLinhaValorMesAnual(linhaId, graficoId, mesRelatorio);
 				
-				return formataDsJSAno(listaLinhaValorVO);
+				return formataDsJSAno(listaLinhaValorVO,isByte);
 				
 			}
 		
@@ -55,13 +57,13 @@ public class LinhaValorEjb {
 				
 				listaLinhaValorVO = linhaValorDAO.getLinhaValorDiaMensal(linhaId, graficoId, mesRelatorio);
 				
-				return formataDsJSMes(listaLinhaValorVO);
+				return formataDsJSMes(listaLinhaValorVO,isByte);
 				
 			}if (tipoPeriodoId == 2) { // anual
 				
 				listaLinhaValorVO = linhaValorDAO.getLinhaValorMesAnual(linhaId, graficoId, mesRelatorio);
 				
-				return formataDsJSAno(listaLinhaValorVO);
+				return formataDsJSAno(listaLinhaValorVO,isByte);
 				
 			}
 
@@ -75,7 +77,7 @@ public class LinhaValorEjb {
 			}if (tipoPeriodoId == 2) { // anual
 				listaLinhaValorVO = linhaValorDAO.getLinhaValorUdmAnual(linhaId, graficoId, mesRelatorio);
 				
-				return formataDsJSAno(listaLinhaValorVO);
+				return formataDsJSAno(listaLinhaValorVO,isByte);
 			}
 			
 			
@@ -84,12 +86,12 @@ public class LinhaValorEjb {
 			if (tipoPeriodoId == 1) { // mensal 
 				listaLinhaValorVO = linhaValorDAO.getLinhaValorTimeFrameHrMensal(linhaId, graficoId, mesRelatorio, listaHoras);
 				
-				return formataDsJSMes(listaLinhaValorVO);
+				return formataDsJSMes(listaLinhaValorVO,isByte);
 				
 			}if (tipoPeriodoId == 2) { // anual
 				listaLinhaValorVO = linhaValorDAO.getLinhaValorTimeFrameHrAnual(linhaId, graficoId, mesRelatorio, listaHoras);
 				
-				return formataDsJSAno(listaLinhaValorVO);
+				return formataDsJSAno(listaLinhaValorVO,isByte);
 			}
 			
 		default:
@@ -107,6 +109,8 @@ public class LinhaValorEjb {
 		
 		case 6: // 8:00 as 18:00
 
+			
+			listaHoras.add(7);
 			
 			listaHoras.add(8);
 			listaHoras.add(9);
@@ -153,7 +157,7 @@ public class LinhaValorEjb {
 		
 	}
 	
-	private String formataDsJSMes(List<LinhaValorVO> listaLinhaValorVO) {
+	private String formataDsJSMes(List<LinhaValorVO> listaLinhaValorVO, Boolean isByte) {
 		String saida = "[";
 		Iterator<LinhaValorVO> itTime = listaLinhaValorVO.iterator();
 		
@@ -162,52 +166,111 @@ public class LinhaValorEjb {
 		SimpleDateFormat sdfIn = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat sdfOut = new SimpleDateFormat("dd");
 		//DecimalFormat df = new DecimalFormat("###");
-		while (itTime.hasNext()) {
-			LinhaValorVO linhaValorVO = itTime.next();
-			try {
-				saida = saida
-						+ "["
-						+ sdfOut.format(sdfIn.parse(linhaValorVO.getData()).getTime())
-						+ "," + linhaValorVO.getValor() + "],";
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		
+		
+		if (isByte){
+		
+			while (itTime.hasNext()) {
+				LinhaValorVO linhaValorVO = itTime.next();
+				try {
+					saida = saida
+							+ "["
+							+ sdfOut.format(sdfIn.parse(linhaValorVO.getData()).getTime())
+							+ "," + linhaValorVO.getValor() /1024/1024/1024 + "],";
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+		} else {
+			
+			while (itTime.hasNext()) {
+				LinhaValorVO linhaValorVO = itTime.next();
+				try {
+					saida = saida
+							+ "["
+							+ sdfOut.format(sdfIn.parse(linhaValorVO.getData()).getTime())
+							+ "," + linhaValorVO.getValor() + "],";
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			
 		}
+			
+		
 		saida = saida.substring(0,saida.length()-1);
 		saida = saida + "]";
 		
-		System.err.println(saida);
+		
 		
 		return saida;
 	}
 	
 	
-	private String formataDsJSAno(List<LinhaValorVO> listaLinhaValorVO) {
+	private String formataDsJSAno(List<LinhaValorVO> listaLinhaValorVO, Boolean isByte) {
 		String saida = "[";
 		Iterator<LinhaValorVO> itTime = listaLinhaValorVO.iterator();
 		Collections.sort(listaLinhaValorVO, new LinhaValorVO());
-		
-		SimpleDateFormat sdfIn = new SimpleDateFormat("MM/yyyy");
-		SimpleDateFormat sdfOut = new SimpleDateFormat("yyyy,MM");
 
-		while (itTime.hasNext()) {
-			LinhaValorVO linhaValorVO = itTime.next();
+		
+		if (isByte){
 			
-			try {
-				saida = saida
-						+ "["
-						+ "(new Date("+linhaValorVO.getData().substring(3, 7) +","+(Integer.parseInt(linhaValorVO.getData().substring(0, 2))-1)+")).getTime()"
-						+ "," + linhaValorVO.getValor() + "],";
-			} catch (Exception e) {
-				e.printStackTrace();
+			while (itTime.hasNext()) {
+				LinhaValorVO linhaValorVO = itTime.next();
+				
+				try {
+					saida = saida
+							+ "["
+							+ "(new Date("+linhaValorVO.getData().substring(3, 7) +","+(Integer.parseInt(linhaValorVO.getData().substring(0, 2))-1)+")).getTime()"
+							+ "," + linhaValorVO.getValor()/1024/1024/1024 + "],";
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			
+		}else{
+			
+			while (itTime.hasNext()) {
+				LinhaValorVO linhaValorVO = itTime.next();
+				
+				try {
+					saida = saida
+							+ "["
+							+ "(new Date("+linhaValorVO.getData().substring(3, 7) +","+(Integer.parseInt(linhaValorVO.getData().substring(0, 2))-1)+")).getTime()"
+							+ "," + linhaValorVO.getValor() + "],";
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
+
 		saida = saida.substring(0,saida.length()-1);
 		saida = saida + "]";
 		
 		return saida;
 	}
 	
+	
+	public List<DBSizeTabelaVO> getTabelaDBsize(Integer graficoId, String mesRelatorio) {
+		
+		List <DBSizeTabelaVO> retorno = linhaValorDAO.getTabelaDBsize(graficoId,mesRelatorio);
+		
+		for (DBSizeTabelaVO i : retorno) {
+			
+			i.setEspTotal(FormataValorUtil.humanReadableByteCount(Long.parseLong(i.getEspTotal()), true));
+			
+			i.setVarAbs(FormataValorUtil.humanReadableByteCount(Long.parseLong(i.getVarAbs()), true));
+			
+			i.setValorA(FormataValorUtil.humanReadableByteCount(Long.parseLong(i.getValorA()), true));
+			
+			i.setValorD(FormataValorUtil.humanReadableByteCount(Long.parseLong(i.getValorD()), true));
+		}
+		return retorno; 
+	}
+		
 	
 }

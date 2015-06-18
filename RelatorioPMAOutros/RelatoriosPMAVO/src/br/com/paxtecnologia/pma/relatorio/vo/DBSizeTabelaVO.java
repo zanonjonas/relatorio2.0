@@ -1,38 +1,66 @@
 package br.com.paxtecnologia.pma.relatorio.vo;
 
-import java.util.Comparator;
 
-public class DBSizeTabelaVO implements Comparator<DBSizeTabelaVO>{
-	private String valor;
-	private String mes;
+public class DBSizeTabelaVO {
 	
-	public String getValor() {
-		return valor;
+	private String valorA;
+	private String valorD;
+	private String mesA;
+	private String mesD;
+	private String varAbs;
+	private Double varPct;
+	private Double utlTotalPct;
+	private String espTotal;
+	
+	public String getValorA() {
+		return valorA;
+	}
+	public void setValorA(String valorA) {
+		this.valorA = valorA;
+	}
+	public String getValorD() {
+		return valorD;
+	}
+	public void setValorD(String valorD) {
+		this.valorD = valorD;
+	}
+	public String getMesA() {
+		return mesA;
+	}
+	public void setMesA(String mesA) {
+		this.mesA = mesA;
+	}
+	public String getMesD() {
+		return mesD;
+	}
+	public void setMesD(String mesD) {
+		this.mesD = mesD;
+	}
+	public String getVarAbs() {
+		return varAbs;
+	}
+	public void setVarAbs(String varAbs) {
+		this.varAbs = varAbs;
+	}
+	public Double getVarPct() {
+		return varPct;
+	}
+	public void setVarPct(Double varPct) {
+		this.varPct = varPct;
+	}
+	public Double getUtlTotalPct() {
+		return utlTotalPct;
+	}
+	public void setUtlTotalPct(Double utlTotalPct) {
+		this.utlTotalPct = utlTotalPct;
+	}
+	public String getEspTotal() {
+		return espTotal;
+	}
+	public void setEspTotal(String espTotal) {
+		this.espTotal = espTotal;
 	}
 	
-	public void setValor(String valor) {
-		this.valor = valor;
-	}
-	
-	public String getData() {
-		return mes;
-	}
-	
-	public void setData(String mes) {
-		this.mes = mes;
-	}
 
-	@Override
-	public int compare(DBSizeTabelaVO positive, DBSizeTabelaVO negative) {
-		
-		String [] partsp = positive.getData().split("/");
-		String [] partsn = negative.getData().split("/");
-		
-		Integer pos = Integer.parseInt(partsp[1]+partsp[0].replaceAll("/", "")); 
-		Integer neg = Integer.parseInt(partsn[1]+partsn[0].replaceAll("/", ""));
-		
-		return pos - neg;
-		
-	}
-
+	
 }
