@@ -259,7 +259,7 @@ public class LinhaValorDAO {
 				"      ,depois.valor depois_valor " +
 				"      ,depois.valor - antes.valor as variacaoabs " +
 				"      ,round((depois.valor - antes.valor)*100 /antes.valor,1) varicaopct " +
-				"      ,round(depois.valor*100/totaldisp.valor,2)  usadopct " +
+				"      ,round(depois.valor*100/totaldisp.valor,1)  usadopct " +
 				"      ,totaldisp.valor totaldisp_valor " +
 				"from " +
 				"(select to_char(a.data,'mm/yyyy') data   " +

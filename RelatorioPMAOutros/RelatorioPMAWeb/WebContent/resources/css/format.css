@@ -12,6 +12,25 @@
 .sub-titulo2 {
 	font-size: 20px;
 	padding-top:20px;
+	text-indent: 25px;
+}
+
+.sub-titulo3 {
+	font-size: 17px;
+	padding-top: 20px;
+	text-indent: 50px;
+}
+
+.body-subtitulo1{
+	text-indent: 30px;
+}
+
+.body-subtitulo2{
+	text-indent: 60px;
+}
+
+.body-subtitulo3{
+	text-indent: 90px;
 }
 
 .quebrapagina {

@@ -24,23 +24,33 @@
 					<li>#{c.capitulo} #{c.display_name}</li>
 					
 						<ui:repeat value="#{c.hostVO}" var="h" varStatus="statusHost" >
-							<ul>
-								<li>#{c.capitulo}.#{statusHost.index+1} Servidor: #{h.displayName}</li>
-						
+														
 								<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia" >
-									<ul>
-										<li>#{c.capitulo}.#{statusHost.index+1}.#{statusInstancia.index+1} Instancia: #{i.displayName}</li>
-										
+									
+									<h:panelGroup layout="block" rendered="#{c.capitulo == '3'}">
+													<ul>
+														<li>#{c.capitulo}.#{statusInstancia.index+1} Instancia #{i.displayName}</li>
+													</ul>
+									</h:panelGroup>	
+									
 										<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico" >
 										<h:panelGroup layout="block" rendered="#{g.capitulo == c.capitulo}">										
 											<ul>
-												<li>#{c.capitulo}.#{statusHost.index+1}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName}</li>
+												<h:panelGroup layout="block" rendered="#{g.capitulo == '3'}">
+													<ul>
+														<li>#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName}</li>
+													</ul>
+												</h:panelGroup>												
+											
+												<h:panelGroup layout="block" rendered="#{g.capitulo == '4'}">
+													<li>#{g.capitulo}.#{g.ordemPlot} #{i.displayName} - #{g.tituloDisplayName} </li>
+												</h:panelGroup>
 											</ul>
 										</h:panelGroup>
 										</ui:repeat>
-									</ul>										
+																		
 								</ui:repeat>
-							</ul>
+							
 						</ui:repeat>
 				</h:panelGroup>
 			</ui:repeat>

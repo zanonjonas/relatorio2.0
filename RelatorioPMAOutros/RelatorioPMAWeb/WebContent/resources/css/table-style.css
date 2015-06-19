@@ -22,13 +22,15 @@
 }
 
 .tr:nth-child(even) {
-    background: #dce6f1;
+	background: none repeat scroll 0 0 #dce6f1;
+	border: 1px solid #FFFFFF;
 	
 }
 
 .tr:nth-child(odd) {
 
-	background: #b8cce4;
+	background: none repeat scroll 0 0 #b8cce4;
+	border: 1px solid #FFFFFF;
 	
 	
 }
@@ -62,3 +64,29 @@
 .celluleCenter {
 	text-align: center;
 }
+
+#dbsizetabela {
+	align: center;
+	font-weight: normal
+}	
+	
+#dbsizetabela tr:nth-child(even) {
+	background: none repeat scroll 0 0 #dce6f1;
+	border: 1px solid #FFFFFF;
+}
+	
+#dbsizetabela tr:nth-child(odd) {
+	background: none repeat scroll 0 0 #b8cce4;
+	border: 1px solid #FFFFFF;
+}
+
+#dbsizetabela th {
+	font-weight: normal
+}
+
+
+
+
+
+
+

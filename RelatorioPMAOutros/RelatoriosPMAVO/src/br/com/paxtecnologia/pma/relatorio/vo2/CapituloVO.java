@@ -12,6 +12,7 @@ public class CapituloVO {
 	private Integer hostInstancia;
 	private List<HostVO> hostVO;
 	private Integer nivel;
+	private String descricao;
 	
 	
 	public String getCapitulo() {
@@ -49,6 +50,12 @@ public class CapituloVO {
 	}
 	public void setNivel(Integer nivel) {
 		this.nivel = nivel;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	
 	

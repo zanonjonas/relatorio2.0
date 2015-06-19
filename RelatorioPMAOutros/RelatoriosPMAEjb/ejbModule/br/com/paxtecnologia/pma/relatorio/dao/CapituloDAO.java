@@ -25,6 +25,7 @@ public class CapituloDAO {
 				           ",a.display_name " +
 				           ",a.host_instancia " +
 				           ",a.nivel " +
+				           ",a.descricao " +
 				           "from rel_capitulos_relatorio a, " +
 		                        "rel_relatorios b " +
 		                  "where a.tipo_relatorio_id=b.tipo_relatorio_id " +
@@ -51,6 +52,7 @@ public class CapituloDAO {
 				temp.setNome(rs.getString("nome"));
 				temp.setDisplay_name(rs.getString("display_name"));
 				temp.setNivel(rs.getInt("nivel"));
+				temp.setDescricao(rs.getString("descricao"));
 				temp.setHostVO(hostDAO.getListaHostsByRelId(relatorioId, mesRelatorio));
 				
 				retorno.add(temp);

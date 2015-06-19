@@ -10,16 +10,18 @@
 			target="head" />
 		<h:outputScript library="js" name="jquery.flot.byte.js" target="head" />
 		<h:outputStylesheet library="css" name="grafico.css" target="head" />
-		<h:outputStylesheet library="css" name="table-style.css" target="head" />
-			
+		
+		
+		
 		 <ui:repeat value="#{relatorioBean.getRelatorioById(relatorioBean.relatorioId,relatorioBean.mesRelatorio)}" var="r" varStatus="statusRelatorio">
 			 
 			<ui:repeat value="#{r.capituloVO}" var="c" varStatus="statusCapitulo" >
+			
 
+				<h:panelGroup layout="block" rendered='#{c.capitulo == "4"}'>
 
-				<h:panelGroup layout="block" rendered='#{c.capitulo == "3"}'>
-
-					
+					<h:outputText value="#{c.descricao}" escape="false"></h:outputText>
+						
 					<ui:repeat value="#{c.hostVO}" var="h" varStatus="statusHost" >
 					
 						<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia" >
@@ -27,7 +29,8 @@
 							<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico" >
 							
 							<h:panelGroup layout="block" rendered='#{g.capitulo == "4"}'>
-						
+							
+													
 								<h:outputScript rendered="#{g.tipoPeriodoId == 2}">
 										//Grafico Anual
 										$(function () {
@@ -85,7 +88,12 @@
 										
 											<div>
 											 
-												<p class="sub-titulo2">3.#{statusHost.index+1}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName} #{g.graficoId}</p>
+											 	
+												<p class="sub-titulo2">#{g.capitulo}.#{g.ordemPlot} #{g.tituloDisplayName} #{i.displayName}</p>
+
+																							
+												
+												
 												<br />
 												<div>
 													<div id="#{g.graficoId}-graficodbsize" class="graph-gnd"></div>
@@ -98,45 +106,47 @@
 											<div>
 											
 											<ui:repeat value="#{graficoBean.getTabelaDBsize(g.graficoId)}" var="j" varStatus="tbLinha" >
+
+											<br></br>
 											
-											<table class="default-table">
+											<div align="center" id="dbsizetabela">
+											
+											<table>
 												<tr>
-													<th class="default-table-odd-row">Tamanho em #{j.mesA}</th>
-													<th class="default-table-odd-row">#{j.valorA}</th>
+													<th style="text-align: left">Tamanho em #{j.mesA}</th>
+													<th style="text-align: right">#{j.valorA}</th>
 												</tr>
 
 												<tr>
-													<th class="default-table-even-row">Tamanho em #{j.mesD}</th>
-													<th class="default-table-even-row">#{j.valorD}</th>
+													<th style="text-align: left">Tamanho em #{j.mesD}</th>
+													<th style="text-align: right">#{j.valorD}</th>
 												</tr>
 
 												<tr>
-													<th class="default-table-odd-row">Variação dos ultimos 2 meses</th>
-													<th class="default-table-odd-row">#{j.varAbs}</th>
+													<th style="text-align: left">Variação dos ultimos 2 meses</th>
+													<th style="text-align: right">#{j.varAbs}</th>
 												</tr>
 
 												<tr>
-													<th class="default-table-even-row">Variação dos ultimos 2 meses (%)</th>
-													<th class="default-table-even-row">#{j.varPct}%</th>
+													<th style="text-align: left">Variação dos ultimos 2 meses (%)</th>
+													<th style="text-align: right">#{j.varPct}%</th>
 												</tr>
 
 												<tr>
-													<th class="default-table-odd-row">Utilização do total (%)</th>
-													<th class="default-table-odd-row">#{j.utlTotalPct}%</th>
+													<th style="text-align: left">Utilização do total reservado (%)</th>
+													<th style="text-align: right">#{j.utlTotalPct}%</th>
 												</tr>
 	
 	
 											</table>
+											</div>
+											<br></br>
 											
-											
-											
-												
+											<div align="left" class="body-subtitulo2"><p>O banco de dados <b>#{i.displayName} </b> teve uma variação em seu tamanho de <b>#{j.varAbs}</b> (<b>#{j.varPct}%</b>) no mês de <b>#{capaBean.mesEAno}</b> em relação ao mês anterior.
+											Atualmente o banco de dados possui <b>#{j.valorD}</b> de tamanho, equivalente a <b>#{j.utlTotalPct}%</b> do espaço total de <b>#{j.espTotal}</b> reservado para o banco de dados.</p></div>
+
 											</ui:repeat>
 													
-												
-												
-												<div align="center"><p>Variação dos últimos dois meses.</p></div>
-		
 								<br></br>
 								<br></br>
 								</div>				

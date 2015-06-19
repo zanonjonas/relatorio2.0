@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<div id='workload' class="quebrapagina">
-		<p class="sub-titulo1">3 WorkLoad</p>
+		<p class="sub-titulo1">3 Carga de Trabalho</p>
 			
 		<h:outputScript library="js" name="jquery.js" target="head" />
 		<h:outputScript library="js" name="jquery.flot.js" target="head" />
@@ -18,11 +18,12 @@
 
 				<h:panelGroup layout="block" rendered='#{c.capitulo == "3"}'>
 
+				<h:outputText value="#{c.descricao}" escape="false"></h:outputText>
 					
 					<ui:repeat value="#{c.hostVO}" var="h" varStatus="statusHost" >
 					
 						<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia" >
-						
+							<p class="sub-titulo2">#{c.capitulo}.#{statusInstancia.index+1} Instancia #{i.displayName} - Sessões Abertas Simultaneamente</p>
 							<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico" >
 							
 							<h:panelGroup layout="block" rendered='#{g.capitulo == "3"}'>
@@ -137,7 +138,7 @@
 										
 											<div>
 											 
-												<p class="sub-titulo2">3.#{statusHost.index+1}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName} #{g.graficoId}</p>
+												<p class="sub-titulo3">#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName}</p>
 												<br />
 												<div>
 													<div id="#{g.graficoId}-graficoworkload" class="graph-gnd"></div>
@@ -146,7 +147,13 @@
 													</div>
 												</div>
 											</div>  	
-									</h:panelGroup>		
+									</h:panelGroup>	
+
+
+										
+										<h:outputText rendered="#{(g.ordemPlot ) mod 2 eq 0}" escape="false" value='&lt;p style="page-break-after:always"&gt;&lt;/p&gt;'/>
+										
+									
 								</ui:repeat>
 							</ui:repeat>
 						</ui:repeat>

@@ -27,9 +27,9 @@
 					class="formato2" />
 				<h:outputText value=" dias." class="formato1" />
 			</div>
-			<p>
-				<h:outputText value="No mês corrente temos:" />
-			</p>
+			
+				<p class="body-subtitulo1">No mês corrente temos:</p>
+			
 			<h:dataTable value="#{paradasBean.listaResumo}" var="i"
 				styleClass="default-table" headerClass="default-table-header"
 				rowClasses="default-table-odd-row,default-table-even-row"
@@ -49,8 +49,8 @@
 				</h:column>
 			</h:dataTable>
 			<br />
-			<h:outputText
-				value="Abaixo podemos acompanhar alguns dados estatísticos do atendimento prestado:" />
+			<p class="body-subtitulo1">Abaixo podemos acompanhar alguns dados estatísticos do atendimento prestado:</p>
+
 		</div>
 		<div id='chamados'>
 			<p class="sub-titulo2">2.1 Indicadores do Atendimento</p>
@@ -168,7 +168,10 @@
 			<div id='chamadoemaberto'>
 				<p class="sub-titulo2">2.4 Chamados em Aberto</p>
 				<br></br>
-				<h:outputText value="Não há chamados em aberto no fim do mês corrente." rendered="#{empty atendimentoBean.listaChamadosEmAbertos}" />
+				<h:panelGroup rendered="#{empty atendimentoBean.listaChamadosEmAbertos}">
+					<p class="body-subtitulo2">Não há chamados em aberto no fim do mês corrente.</p>
+				</h:panelGroup>
+				
 				<h:dataTable value="#{atendimentoBean.listaChamadosEmAbertos}"
 					var="i" styleClass="default-table"
 					headerClass="default-table-header"

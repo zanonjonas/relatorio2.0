@@ -11,9 +11,9 @@
 		<p class="sub-titulo1">5. Resumo de Paradas</p>
 		<div id='paradasevitadas'>
 			<p class="sub-titulo2">5.1 Paradas Evitadas (PE)</p>
-			<h:outputText value="Consideramos paradas evitadas, atuações executadas no ambiente depois de detectadas pelo monitoramento acionando a equipe técnica que tomou alguma ação para evitar a parada." />
+			<p class="body-subtitulo2">Consideramos paradas evitadas, atuações executadas no ambiente depois de detectadas pelo monitoramento acionando a equipe técnica que tomou alguma ação para evitar a parada.</p>
 			<br></br><br></br>
-			<h:outputText value="Últimos anos:" />
+			<p class="body-subtitulo2">Últimos anos:</p>
 			<h:dataTable value="#{paradasBean.getListaUltimosAnosHoras('PE')}" var="i"
 				styleClass="default-table" headerClass="default-table-header"
 				rowClasses="default-table-odd-row,default-table-even-row"
@@ -32,10 +32,18 @@
 				</h:column>
 
 			</h:dataTable>
-			<h:outputText value="Acumulado do ano:" />
+			
+			<p class="body-subtitulo2">Acumulado do ano:</p>
 			<div id="graficoAcumuladoAno" class="graph-med"></div>
-			<h:outputText value="Dados do mês:" rendered="#{!empty paradasBean.listaParadasEvitadasMes}"/>
-			<h:outputText value="Durante o mês vigente no relatório não foram constatadas PEs." rendered="#{empty paradasBean.listaParadasEvitadasMes}"/>
+			
+			<h:panelGroup rendered="#{!empty paradasBean.listaParadasEvitadasMes}">
+				<p class="body-subtitulo2">Dados do mês:</p>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{empty paradasBean.listaParadasEvitadasMes}">
+				<p class="body-subtitulo2">Durante o mês vigente no relatório não foram constatadas PEs.</p>
+			</h:panelGroup>
+
 			<h:dataTable value="#{paradasBean.listaParadasEvitadasMes}" var="i"
 				styleClass="default-table" headerClass="default-table-header"
 				rowClasses="default-table-odd-row,default-table-even-row"
@@ -73,10 +81,11 @@
 		</div>
 		<div id='paradasnaoprogramadas'>
 			<p class="sub-titulo2">5.2 Paradas Não Programadas (PNP)</p>
-			<h:outputText
-				value="Paradas que ocorreram no ambiente de forma bruta, sem conhecimento da equipe técnica." />
+			<p class="body-subtitulo2">Paradas que ocorreram no ambiente de forma bruta, sem conhecimento da equipe técnica.</p>
 			<br></br>
-			<h:outputText value="Durante o mês vigente no relatório não foram constatadas PNP." rendered="#{empty paradasBean.listaParadasNaoProgramadasMes}" />	
+			<h:panelGroup rendered="#{empty paradasBean.listaParadasNaoProgramadasMes}">
+				<p class="body-subtitulo2">Durante o mês vigente no relatório não foram constatadas PNP.</p>
+			</h:panelGroup>
 			<h:dataTable value="#{paradasBean.listaParadasNaoProgramadasMes}"
 				var="i" styleClass="default-table"
 				headerClass="default-table-header"
@@ -114,10 +123,12 @@
 		</div>
 		<div id='programadassestrategicas'>
 			<p class="sub-titulo2">5.3 Paradas Programadas Estratégicas (PPE)</p>
-			<h:outputText
-				value="Consideramos paradas programadas estratégicas as situações de necessidade de manutenção no ambiente, onde é possível sua execução sem causar indisponibilidade no mesmo." />
+			<p class="body-subtitulo2">Consideramos paradas programadas estratégicas as situações de necessidade de manutenção no ambiente, onde é possível sua execução sem causar indisponibilidade no mesmo.</p>
 			<br></br>
-			<h:outputText value="Durante o mês vigente no relatório não foram constatadas PPE." rendered="#{empty paradasBean.listaParadasProgramadasEstrategicasMes}" />	
+			<h:panelGroup rendered="#{empty paradasBean.listaParadasProgramadasEstrategicasMes}">
+				<p class="body-subtitulo2">Durante o mês vigente no relatório não foram constatadas PPE.</p>
+			</h:panelGroup>	
+			
 			<h:dataTable
 				value="#{paradasBean.listaParadasProgramadasEstrategicasMes}" var="i"
 				styleClass="default-table" headerClass="default-table-header"
@@ -155,10 +166,11 @@
 		</div>
 		<div id='paradasprogramadas'>
 			<p class="sub-titulo2">5.4 Paradas Programadas (PP)</p>
-			<h:outputText
-				value="Consideramos paradas programas as situações de necessidade de manutenção no ambiente, porém gerando indisponibilidade no mesmo." />
+			<p class="body-subtitulo2">Consideramos paradas programas as situações de necessidade de manutenção no ambiente, porém gerando indisponibilidade no mesmo.</p>
 			<br></br>
-			<h:outputText value="Durante o mês vigente no relatório não foram constatadas PP." rendered="#{empty paradasBean.listaParadasProgramadasMes}" />	
+			<h:panelGroup rendered="#{empty paradasBean.listaParadasProgramadasMes}">
+				<p class="body-subtitulo2">Durante o mês vigente no relatório não foram constatadas PP.</p>
+			</h:panelGroup>	
 			<h:dataTable value="#{paradasBean.listaParadasProgramadasMes}" var="i"
 				styleClass="default-table" headerClass="default-table-header"
 				rowClasses="default-table-odd-row,default-table-even-row"
@@ -195,8 +207,8 @@
 		</div>
 		<div id='totais'>
 			<p class="sub-titulo2">5.5 Totais</p>
-			<h:outputText
-				value="A PNP esta diretamente relacionada ao PE, onde PNP gera Downtime e PE gera downtime evitado, sendo assim:" />
+				<p class="body-subtitulo2">A PNP esta diretamente relacionada ao PE, onde PNP gera Downtime e PE gera downtime evitado, sendo assim:</p>
+				<br></br>
 			<div class="centro">
 				<h:outputText value="PNP: #{paradasBean.getTempoParadasMes('PNP')} hrs" class="formatodestaque"/>
 				<br />
@@ -209,9 +221,8 @@
 				</div>
 			</div>
 
-
-			<h:outputText
-				value="A PP esta diretamente relacionada ao PPE, onde PP gera Downtime e PPE gera downtime evitado, sendo assim:" />
+				<p class="body-subtitulo2">A PP esta diretamente relacionada ao PPE, onde PP gera Downtime e PPE gera downtime evitado, sendo assim:</p>
+				<br></br>
 			<div class="centro">
 				<h:outputText value="PP: #{paradasBean.getTempoParadasMes('PP')} hrs" class="formatodestaque" />
 				<br />
