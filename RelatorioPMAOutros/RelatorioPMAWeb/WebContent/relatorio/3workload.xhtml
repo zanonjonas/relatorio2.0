@@ -1,7 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jstl/core">
 	<div id='workload' class="quebrapagina">
 		<p class="sub-titulo1">3 Carga de Trabalho</p>
 			
@@ -10,6 +11,7 @@
 		<h:outputScript library="js" name="jquery.flot.orderBars.js"
 			target="head" />
 		<h:outputStylesheet library="css" name="grafico.css" target="head" />
+		
 		
 		 <ui:repeat value="#{relatorioBean.getRelatorioById(relatorioBean.relatorioId,relatorioBean.mesRelatorio)}" var="r" varStatus="statusRelatorio">
 			 
@@ -137,10 +139,37 @@
 										    </h:outputScript>
 										
 											<div>
-											 
-												<p class="sub-titulo3">#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName}</p>
+											 	<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 1}">
+											 		
+													<p class="sub-titulo3">#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName}</p>
+													
+												</h:panelGroup>
+												<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 3}">
+											 		
+													<p class="sub-titulo3">#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot-1} #{g.tituloDisplayName}</p>
+													
+												</h:panelGroup>
+												<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 5}">
+											 		
+													<p class="sub-titulo3">#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot-2} #{g.tituloDisplayName}</p>
+													
+												</h:panelGroup>
+												<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 7}">
+											 		
+													<p class="sub-titulo3">#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot-3} #{g.tituloDisplayName}</p>
+													
+												</h:panelGroup>
+
 												<br />
 												<div>
+												<div class="centro">
+													<h:panelGroup rendered="#{g.tipoPeriodoId == 1}">
+														<p class="formatodestaque"><b>Gráfico Mensal</b></p>
+													</h:panelGroup>
+													<h:panelGroup rendered="#{g.tipoPeriodoId == 2}">
+														<p class="formatodestaque"><b>Gráfico Anual</b></p>
+													</h:panelGroup>
+												</div>
 													<div id="#{g.graficoId}-graficoworkload" class="graph-gnd"></div>
 													<div align="center">
 														<div id="#{g.graficoId}-legendaworkload"></div>

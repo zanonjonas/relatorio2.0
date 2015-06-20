@@ -29,7 +29,7 @@
 									
 									<h:panelGroup layout="block" rendered="#{c.capitulo == '3'}">
 													<ul>
-														<li>#{c.capitulo}.#{statusInstancia.index+1} Instancia #{i.displayName}</li>
+														<li>#{c.capitulo}.#{statusInstancia.index+1} Instância #{i.displayName}</li>
 													</ul>
 									</h:panelGroup>	
 									
@@ -38,7 +38,31 @@
 											<ul>
 												<h:panelGroup layout="block" rendered="#{g.capitulo == '3'}">
 													<ul>
-														<li>#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName}</li>
+													
+													<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 1}">
+											 		
+													<li>#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName}</li>
+													
+												</h:panelGroup>
+												<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 3}">
+											 		
+													<li>#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot-1} #{g.tituloDisplayName}</li>
+													
+												</h:panelGroup>
+												<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 5}">
+											 		
+													
+													<li>#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot-2} #{g.tituloDisplayName}</li>
+													
+												</h:panelGroup>
+												<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 7}">
+											 		
+													
+													<li>#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot-3} #{g.tituloDisplayName}</li>
+													
+												</h:panelGroup>
+													
+														
 													</ul>
 												</h:panelGroup>												
 											
