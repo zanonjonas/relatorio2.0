@@ -25,7 +25,7 @@
 					<ui:repeat value="#{c.hostVO}" var="h" varStatus="statusHost" >
 					
 						<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia" >
-							<p class="sub-titulo2">#{c.capitulo}.#{statusInstancia.index+1} Instancia #{i.displayName} - Sessões Abertas Simultaneamente</p>
+							<p class="sub-titulo2">#{c.capitulo}.#{statusHost.index+1} Instancia #{i.displayName} - Sessões Abertas Simultaneamente</p>
 							<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico" >
 							
 							<h:panelGroup layout="block" rendered='#{g.capitulo == "3"}'>
@@ -141,22 +141,22 @@
 											<div>
 											 	<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 1}">
 											 		
-													<p class="sub-titulo3">#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot} #{g.tituloDisplayName}</p>
+													<p class="sub-titulo3">#{g.capitulo}.#{statusHost.index+1}.#{g.ordemPlot} #{g.tituloDisplayName}</p>
 													
 												</h:panelGroup>
 												<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 3}">
 											 		
-													<p class="sub-titulo3">#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot-1} #{g.tituloDisplayName}</p>
+													<p class="sub-titulo3">#{g.capitulo}.#{statusHost.index+1}.#{g.ordemPlot-1} #{g.tituloDisplayName}</p>
 													
 												</h:panelGroup>
 												<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 5}">
 											 		
-													<p class="sub-titulo3">#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot-2} #{g.tituloDisplayName}</p>
+													<p class="sub-titulo3">#{g.capitulo}.#{statusHost.index+1}.#{g.ordemPlot-2} #{g.tituloDisplayName}</p>
 													
 												</h:panelGroup>
 												<h:panelGroup rendered="#{g.tipoPeriodoId == 1 and g.ordemPlot == 7}">
 											 		
-													<p class="sub-titulo3">#{g.capitulo}.#{statusInstancia.index+1}.#{g.ordemPlot-3} #{g.tituloDisplayName}</p>
+													<p class="sub-titulo3">#{g.capitulo}.#{statusHost.index+1}.#{g.ordemPlot-3} #{g.tituloDisplayName}</p>
 													
 												</h:panelGroup>
 

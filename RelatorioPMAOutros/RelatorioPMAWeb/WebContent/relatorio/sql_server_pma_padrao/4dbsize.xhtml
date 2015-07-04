@@ -1,0 +1,176 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div id='dbsize' >
+		<p class="sub-titulo1">4 Tamanho do banco de dados</p>
+		<h:outputScript library="js" name="jquery.js" target="head" />
+		<h:outputScript library="js" name="jquery.flot.js" target="head" />
+		<h:outputScript library="js" name="jquery.flot.orderBars.js"
+			target="head" />
+		<h:outputScript library="js" name="jquery.flot.byte.js" target="head" />
+		<h:outputStylesheet library="css" name="grafico.css" target="head" />
+		
+		
+		
+		 <ui:repeat value="#{relatorioBean.getRelatorioById(relatorioBean.relatorioId,relatorioBean.mesRelatorio)}" var="r" varStatus="statusRelatorio">
+			 
+			<ui:repeat value="#{r.capituloVO}" var="c" varStatus="statusCapitulo" >
+			
+
+				<h:panelGroup layout="block" rendered='#{c.capitulo == "4"}'>
+
+					<h:outputText value="#{c.descricao}" escape="false"></h:outputText>
+						
+					<ui:repeat value="#{c.hostVO}" var="h" varStatus="statusHost" >
+					
+						<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia" >
+						
+							<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico" >
+							
+							<h:panelGroup layout="block" rendered='#{g.capitulo == "4"}'>
+							
+													
+								<h:outputScript rendered="#{g.tipoPeriodoId == 2}">
+										//Grafico Anual
+										$(function () {
+										    var previousPoint;
+									
+									<ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
+									
+												d#{l.ordem} = #{graficoBean.getLinhaValorJS(l.linhaId, g.graficoId, g.tipoPeriodoId, l.tipoConsolidacaoDadoId, true)};
+												 
+									</ui:repeat>
+											
+											    var ds = new Array();
+											    var options = {
+											            legend:{         
+											                container:$("##{g.graficoId}-legendadbsize"),
+											                noColumns:#{g.graficoLinhaVO.size()},
+											            },
+											            xaxis: {
+											            	mode: "time",
+															minTickSize: [1, "month"],
+															timeformat: "%b %y"
+											            },
+											            yaxis: {           
+	           								            	autoscaleMargin: 0.10,
+											            	mode: "byteRate"
+
+											            },
+											            points: {
+				                    						radius: 3,
+				                    						fill: true,
+				                    						show: true
+				                						}
+											    }
+											    
+											    <ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
+												    
+												    ds.push({
+														label: "#{graficoBean.parseLegenda(g.graficoId,l.linhaId,l.legenda)}",
+														color: "#{l.cor}",
+												        data:d#{l.ordem},
+												        lines: {
+											            show: true, 
+											            lineWidth: 3, 
+											            order: #{l.ordem}
+											        	    }
+												    });
+												    
+												    
+											    </ui:repeat>
+											    
+											    //Display graph
+											    $.plot($("##{g.graficoId}-graficodbsize"), ds, options);
+											    });
+										    </h:outputScript>
+										
+											
+										
+											<div>
+											 
+											 	
+												<p class="sub-titulo2">#{g.capitulo}.#{g.ordemPlot} #{g.tituloDisplayName} #{i.displayName}</p>
+
+																							
+												
+												
+												<br />
+												<div class="centro">
+												<h:panelGroup rendered="#{g.tipoPeriodoId == 2}">
+														<p class="formatodestaque"><b>Gráfico Anual</b></p>
+													</h:panelGroup>
+													<div id="#{g.graficoId}-graficodbsize" class="graph-gnd"></div>
+													<div align="center">
+														<div id="#{g.graficoId}-legendadbsize"></div>
+													</div>
+												</div>
+											</div>  
+														
+											<div>
+											
+											<ui:repeat value="#{graficoBean.getTabelaDBsize(g.graficoId)}" var="j" varStatus="tbLinha" >
+
+											<br></br>
+											
+											<div align="center" id="dbsizetabela">
+											
+											<table>
+												<tr>
+													<th style="text-align: left">Tamanho em #{j.mesA}</th>
+													<th style="text-align: right">#{j.valorA}</th>
+												</tr>
+
+												<tr>
+													<th style="text-align: left">Tamanho em #{j.mesD}</th>
+													<th style="text-align: right">#{j.valorD}</th>
+												</tr>
+
+												<tr>
+													<th style="text-align: left">Variação dos ultimos 2 meses</th>
+													<th style="text-align: right">#{j.varAbs}</th>
+												</tr>
+
+												<tr>
+													<th style="text-align: left">Variação dos ultimos 2 meses (%)</th>
+													<th style="text-align: right">#{j.varPct}%</th>
+												</tr>
+
+												<tr>
+													<th style="text-align: left">Utilização do total reservado (%)</th>
+													<th style="text-align: right">#{j.utlTotalPct}%</th>
+												</tr>
+	
+	
+											</table>
+											</div>
+											<br></br>
+											
+											<div align="left" class="body-subtitulo2"><p>O banco de dados <b>#{i.displayName} </b> teve uma variação em seu tamanho de <b>#{j.varAbs}</b> (<b>#{j.varPct}%</b>) no mês de <b>#{capaBean.mesEAno}</b> em relação ao mês anterior.
+											Atualmente o banco de dados possui <b>#{j.valorD}</b> de tamanho, equivalente a <b>#{j.utlTotalPct}%</b> do espaço total de <b>#{j.espTotal}</b> reservado para o banco de dados.</p></div>
+
+											
+
+											</ui:repeat>
+											
+										    		
+											
+													
+											<br></br>
+											<br></br>
+											<div class="quebrapagina"></div>
+								</div>				
+									</h:panelGroup>
+								</ui:repeat>
+							</ui:repeat>
+						</ui:repeat>
+					</h:panelGroup>
+				</ui:repeat>
+			</ui:repeat>
+
+
+		
+	</div>
+
+</ui:composition>

@@ -293,4 +293,41 @@ public class RelatorioDAO {
 		
 	}
 	
+	
+public Integer getTipoRelatorioIdByRelatorioId(Integer relatorioId){
+		
+		Integer retorno = null;
+		
+		connection = new DataSourcePMA();
+		
+		PreparedStatement pstmt;
+		
+		String sql = "select tipo_relatorio_id " +
+				       "from rel_relatorios a " +
+				       "where a.relatorio_id = ?";
+		pstmt = connection.getPreparedStatement(sql);
+		try {
+			pstmt.setInt(1, relatorioId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ResultSet rs = connection.executaQuery(pstmt);
+
+		try {
+			while (rs.next()) {
+				
+				retorno = rs.getInt("tipo_relatorio_id");
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connection.closeConnection(pstmt);
+		return retorno;
+
+		
+	}
+	
 }

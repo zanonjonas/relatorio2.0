@@ -2,7 +2,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<div id='dbsize' class="quebrapagina">
+	<div id='dbsize' >
 		<p class="sub-titulo1">4 Tamanho do banco de dados</p>
 		<h:outputScript library="js" name="jquery.js" target="head" />
 		<h:outputScript library="js" name="jquery.flot.js" target="head" />
@@ -86,6 +86,8 @@
 											    });
 										    </h:outputScript>
 										
+											
+										
 											<div>
 											 
 											 	
@@ -148,12 +150,18 @@
 											<div align="left" class="body-subtitulo2"><p>O banco de dados <b>#{i.displayName} </b> teve uma variação em seu tamanho de <b>#{j.varAbs}</b> (<b>#{j.varPct}%</b>) no mês de <b>#{capaBean.mesEAno}</b> em relação ao mês anterior.
 											Atualmente o banco de dados possui <b>#{j.valorD}</b> de tamanho, equivalente a <b>#{j.utlTotalPct}%</b> do espaço total de <b>#{j.espTotal}</b> reservado para o banco de dados.</p></div>
 
+											
+
 											</ui:repeat>
+											
+										    		
+											
 													
-								<br></br>
-								<br></br>
+											<br></br>
+											<br></br>
+											<div class="quebrapagina"></div>
 								</div>				
-									</h:panelGroup>		
+									</h:panelGroup>
 								</ui:repeat>
 							</ui:repeat>
 						</ui:repeat>

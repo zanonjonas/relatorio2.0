@@ -77,7 +77,10 @@ public class LinhaValorEjb {
 			}if (tipoPeriodoId == 2) { // anual
 				listaLinhaValorVO = linhaValorDAO.getLinhaValorUdmAnual(linhaId, graficoId, mesRelatorio);
 				
+				
+				
 				return formataDsJSAno(listaLinhaValorVO,isByte);
+				
 			}
 			
 			

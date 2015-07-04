@@ -59,5 +59,11 @@ public class RelatorioEjb {
 		
 	}
 	
+	public Integer getTipoRelatorioIdByRelatorioId(Integer relatorioId){
+		
+		return relatorioDAO.getTipoRelatorioIdByRelatorioId(relatorioId);
+		
+	}
+	
 	
 }

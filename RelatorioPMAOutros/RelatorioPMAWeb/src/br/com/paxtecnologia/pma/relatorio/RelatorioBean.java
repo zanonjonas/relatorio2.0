@@ -31,6 +31,9 @@ public class RelatorioBean {
 		private String tituloCapa;
 		private String logoStr;
 		private String clienteDisplayName;
+		private Integer tipoRelatorioId;
+		
+		
 		
 		public Boolean getUpdate() {
 			return update;
@@ -86,6 +89,13 @@ public class RelatorioBean {
 			
 			return projetoJiraId;
 		}
+		
+		public Integer getTipoRelatorioId() {
+			
+			tipoRelatorioId = relatorioEjb.getTipoRelatorioIdByRelatorioId(getRelatorioId());
+			
+			return tipoRelatorioId;
+		}
 
 		public void setProjetoJiraId(Integer projetoJiraId) {
 			this.projetoJiraId = projetoJiraId;
@@ -137,6 +147,10 @@ public class RelatorioBean {
 			this.relatorioId = relatorioId;
 		}
 		
+		
+		public void getTipoRelatorioId(String nome) {
+			this.nome = nome;
+		}
 		
 		
 		

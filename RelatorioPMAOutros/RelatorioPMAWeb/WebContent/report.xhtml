@@ -15,6 +15,8 @@
 <h:body>
 
 
+
+
 	<div id='topo'>
 		<ui:include src="relatorio/capa.xhtml" />
 	</div>
@@ -22,14 +24,43 @@
 		style="background-image: url('#{resource['images:t3_l.png']}'); background-repeat:repeat-y; border-color: #ffffff; border-width: 1px; border-left-style: solid; height:auto;">
 		<div id='meio-esquerda'></div>
 		<div id='meio-direita'>
-		    <ui:include src="relatorio/sumario.xhtml" />
+		
+		<!-- 
+		"ID"  "Tipo do Relatório"
+		1	Oracle Database PMA padrao
+		2	IIS PMA padrao
+		3	SQL PMA Server padrao
+		4	Tomcat PMA padrao
+		5	Oracle Weblogic PMA padrao
+		 -->
+		
+			<h:panelGroup rendered="#{relatorioBean.tipoRelatorioId == 1}">
+				<ui:include src="relatorio/oracle_db_pma_padrao/sumario.xhtml" />
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{relatorioBean.tipoRelatorioId == 3}">
+				<ui:include src="relatorio/sql_server_pma_padrao/sumario.xhtml" />
+			</h:panelGroup>
+		
+		    
 			<ui:include src="relatorio/introducao.xhtml" /> 
 			<ui:include src="relatorio/resumoatendimento.xhtml" />
-			<ui:include src="relatorio/3workload.xhtml" />
-			<ui:include src="relatorio/4dbsize.xhtml" />
-			<ui:include src="relatorio/resumodeparadas.xhtml" />
-			<ui:include src="relatorio/conclusao.xhtml" />
 			
+			<h:panelGroup rendered="#{relatorioBean.tipoRelatorioId == 1}">
+			
+				<ui:include src="relatorio/oracle_db_pma_padrao/3workload.xhtml" />
+				<ui:include src="relatorio/oracle_db_pma_padrao/4dbsize.xhtml" />
+				<ui:include src="relatorio/oracle_db_pma_padrao/resumodeparadas.xhtml" />
+			
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{relatorioBean.tipoRelatorioId == 3}">
+			
+				<ui:include src="relatorio/sql_server_pma_padrao/3workload.xhtml" />
+				<ui:include src="relatorio/sql_server_pma_padrao/4dbsize.xhtml" />
+				<ui:include src="relatorio/sql_server_pma_padrao/resumodeparadas.xhtml" />
+			
+			</h:panelGroup>
 			
 		</div>
 	</div>

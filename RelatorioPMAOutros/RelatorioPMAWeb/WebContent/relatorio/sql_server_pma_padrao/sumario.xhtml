@@ -1,0 +1,60 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<div id='sumario'>
+		<p class="sub-titulo1 centro">Sumário</p>
+		<ul class="lista">
+		<li>
+		<ui:repeat value="#{relatorioBean.getRelatorioById(relatorioBean.relatorioId,relatorioBean.mesRelatorio)}" var="r" varStatus="statusRelatorio">
+	
+			<ui:repeat value="#{r.capituloVO}" var="c" varStatus="statusCapitulo" >
+			
+				<h:panelGroup layout="block" rendered="#{c.nivel == 1 and c.hostInstancia == 0}">	
+					
+					<li>#{c.capitulo} #{c.display_name}</li>
+					
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" rendered="#{c.nivel == 2 and c.hostInstancia == 0}">
+					<ul>
+					<li>#{c.capitulo} #{c.display_name}</li>
+					</ul>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" rendered="#{c.nivel == 1 and c.hostInstancia == 1}">	
+					<li>#{c.capitulo} #{c.display_name}</li>
+					
+						<ui:repeat value="#{c.hostVO}" var="h" varStatus="statusHost" >
+														
+								<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia" >
+									
+									<h:panelGroup layout="block" rendered="#{c.capitulo == '3'}">
+													<ul>
+														<li>#{c.capitulo}.#{statusHost.index+1} Instância #{i.displayName}</li>
+													</ul>
+									</h:panelGroup>	
+									
+										<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico" >
+										<h:panelGroup layout="block" rendered="#{g.capitulo == c.capitulo}">										
+											<ul>
+																						
+											
+												<h:panelGroup layout="block" rendered="#{g.capitulo == '4'}">
+													<li>#{g.capitulo}.#{statusHost.index+1} #{i.displayName} - #{g.tituloDisplayName} </li>
+												</h:panelGroup>
+											</ul>
+										</h:panelGroup>
+										</ui:repeat>
+																		
+								</ui:repeat>
+							
+						</ui:repeat>
+				</h:panelGroup>
+			</ui:repeat>
+		</ui:repeat>
+			</li>
+			</ul>
+	</div>
+</ui:composition>
