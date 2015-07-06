@@ -1,0 +1,174 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jstl/core">
+	<div id='workload' class="quebrapagina">
+		<p class="sub-titulo1">3 Carga de Trabalho</p>
+			
+		<h:outputScript library="js" name="jquery.js" target="head" />
+		<h:outputScript library="js" name="jquery.flot.js" target="head" />
+		<h:outputScript library="js" name="jquery.flot.orderBars.js"
+			target="head" />
+		<h:outputStylesheet library="css" name="grafico.css" target="head" />
+		
+		
+		 <ui:repeat value="#{relatorioBean.getRelatorioById(relatorioBean.relatorioId,relatorioBean.mesRelatorio)}" var="r" varStatus="statusRelatorio">
+			 
+			<ui:repeat value="#{r.capituloVO}" var="c" varStatus="statusCapitulo" >
+
+
+				<h:panelGroup layout="block" rendered='#{c.capitulo == "3"}'>
+
+				<h:outputText value="#{c.descricao}" escape="false"></h:outputText>
+					
+					<ui:repeat value="#{c.hostVO}" var="h" varStatus="statusHost" >
+					
+						<ui:repeat value="#{h.instanciaVO}" var="i" varStatus="statusInstancia" >
+							<p class="sub-titulo2">#{c.capitulo}.#{statusHost.index+1} #{i.displayName} - Conexões HTTP Abertas</p>
+							<ui:repeat value="#{i.graficoVO}" var="g" varStatus="statusGrafico" >
+							
+							<h:panelGroup layout="block" rendered='#{g.capitulo == "3"}'>
+						
+									<h:outputScript rendered="#{g.tipoPeriodoId == 1}">
+										//Grafico mensal
+										$(function () {
+										    var previousPoint;
+									
+								<ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >					
+									d#{l.ordem} = #{graficoBean.getLinhaValorJS(l.linhaId, g.graficoId, g.tipoPeriodoId, l.tipoConsolidacaoDadoId, false)};
+								</ui:repeat>
+										
+																
+										    var ds = new Array();
+										    var options = {
+										            legend:{         
+										                container:$("##{g.graficoId}-legendaworkload"),
+										                noColumns:#{g.graficoLinhaVO.size()},
+										            },
+										            grid:{
+										                hoverable:true,
+										            },
+										            xaxis: {
+				                                        min: 0.5,
+				                                        max: #{graficoBean.diasNoMes}.5,
+														ticks: #{graficoBean.diasNoMes},
+				                                        tickDecimals: 0,
+				                                        autoscaleMargin: 100
+										            },
+										            yaxis: {           	
+										            	tickDecimals: 0
+										            },
+										            bars:{
+										            	align: "center" // or "center"
+										            	}
+										    }
+										    
+										    <ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
+											      
+											    ds.push({
+											     	label: "#{graficoBean.parseLegenda(g.graficoId,l.linhaId,l.legenda)}", 
+													color: "#{l.cor}",
+											        data: d#{l.ordem},
+											        bars: {
+											            show: true, 
+											            lineWidth: 2, 
+											            barWidth: 0.05,  
+											            order: #{l.ordem},
+											        }
+											    });
+											    
+										    </ui:repeat>
+										    
+										    //Display graph
+										    $.plot($("##{g.graficoId}-graficoworkload"), ds, options);
+										    });
+										    
+										    </h:outputScript>
+										    
+								<h:outputScript rendered="#{g.tipoPeriodoId == 2}">
+										//Grafico Anual
+										$(function () {
+										    var previousPoint;
+									
+									<ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
+									
+												d#{l.ordem} = #{graficoBean.getLinhaValorJS(l.linhaId, g.graficoId, g.tipoPeriodoId, l.tipoConsolidacaoDadoId, false)};
+												 
+									</ui:repeat>
+											
+											    var ds = new Array();
+											    var options = {
+											            legend:{         
+											                container:$("##{g.graficoId}-legendaworkload"),
+											                noColumns:#{g.graficoLinhaVO.size()},
+											            },
+											            xaxis: {
+											            	mode: "time",
+															minTickSize: [1, "month"],
+															timeformat: "%b %y"
+											            },
+											            yaxis: {           
+											            	tickDecimals: 0
+											            },
+											            bars:{
+											            	align: "center" // or "center"
+											            	}
+											    }
+											    
+											    <ui:repeat value="#{g.graficoLinhaVO}" var="l" varStatus="statusLinha" >
+												    
+												    ds.push({
+														label: "#{graficoBean.parseLegenda(g.graficoId,l.linhaId,l.legenda)}",
+														color: "#{l.cor}",
+												        data:d#{l.ordem},
+												        bars: {
+												            show: true, 
+												            lineWidth: 6, 
+												            barWidth: 0.05,  
+												            order: #{l.ordem},
+												        }
+												    });
+												    
+												    
+											    </ui:repeat>
+											    
+											    //Display graph
+											    $.plot($("##{g.graficoId}-graficoworkload"), ds, options);
+											    });
+										    </h:outputScript>
+										
+											<div>
+											
+
+												<br />
+												<div>
+												<div class="centro">
+													<h:panelGroup rendered="#{g.tipoPeriodoId == 1}">
+														<p class="formatodestaque"><b>Gráfico Mensal</b></p>
+													</h:panelGroup>
+													<h:panelGroup rendered="#{g.tipoPeriodoId == 2}">
+														<p class="formatodestaque"><b>Gráfico Anual</b></p>
+													</h:panelGroup>
+												</div>
+													<div id="#{g.graficoId}-graficoworkload" class="graph-gnd"></div>
+													<div align="center">
+														<div id="#{g.graficoId}-legendaworkload"></div>
+													</div>
+												</div>
+											</div>  	
+									</h:panelGroup>	
+
+
+										
+										<h:outputText rendered="#{(g.ordemPlot ) mod 2 eq 0}" escape="false" value='&lt;p style="page-break-after:always"&gt;&lt;/p&gt;'/>
+										
+									
+								</ui:repeat>
+							</ui:repeat>
+						</ui:repeat>
+					</h:panelGroup>
+				</ui:repeat>
+			</ui:repeat>
+	</div>
+</ui:composition>

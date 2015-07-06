@@ -84,7 +84,7 @@ public class LinhaValorEjb {
 			}
 			
 			
-		case 6: case 7: // TimeFrames.
+		case 6: case 7: case 8: case 9: // TimeFrames.
 			
 			if (tipoPeriodoId == 1) { // mensal 
 				listaLinhaValorVO = linhaValorDAO.getLinhaValorTimeFrameHrMensal(linhaId, graficoId, mesRelatorio, listaHoras);
@@ -111,9 +111,6 @@ public class LinhaValorEjb {
 		switch (tipoConsolidacaoDadoId) {
 		
 		case 6: // 8:00 as 18:00
-
-			
-			listaHoras.add(7);
 			
 			listaHoras.add(8);
 			listaHoras.add(9);
@@ -146,6 +143,31 @@ public class LinhaValorEjb {
 			listaHoras.add(22);
 			listaHoras.add(23);
 
+			break;
+
+		case 8: // 18:00 até 23:00
+
+			listaHoras.add(18);
+			listaHoras.add(19);
+			listaHoras.add(20);
+			listaHoras.add(21);
+			listaHoras.add(22);
+			
+			break;
+			
+		case 9: // 00:00 até 08:00 e 23:00 até 24:00
+			
+			listaHoras.add(0);
+			listaHoras.add(1);
+			listaHoras.add(2);
+			listaHoras.add(3);
+			listaHoras.add(4);
+			listaHoras.add(5);
+			listaHoras.add(6);
+			listaHoras.add(7);
+			
+			listaHoras.add(23);
+			
 			break;
 			
 		default:
